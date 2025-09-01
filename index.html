@@ -75,7 +75,12 @@
             Encuentra los últimos gadgets y dispositivos tecnológicos al mejor
             precio.
           </p>
-          <a href="#products" class="button">Ver Productos</a>
+          <a href="#products" class="button" onclick='dataLayer.push({
+            event: "click_hero_button",
+            category: "engagement",
+            action: "click",
+            label: "hero_button"
+          })'>Ver Productos</a>
         </div>
       </div>
     </section>
