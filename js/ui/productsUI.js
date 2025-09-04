@@ -105,7 +105,11 @@ export class ProductsUI {
                     <div class="product__buttons">
                         <a href="product.html?id=${
                           product.id
-                        }" class="button button--secondary" data-product-name="${product.name}">Ver Detalles</a>
+                        }" class="button button--secondary" onclick={()=>dataLayer.push({
+                          event: 'ver_producto',
+                          product_id: product.id,
+                          product_name: product.name
+                        })}">Ver Detalles</a>
                         <button class="button product__button" data-id="${
                           product.id
                         }">
