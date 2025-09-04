@@ -87,32 +87,28 @@ export class ProductsUI {
       .map(
         (product) => `
             <article class="product__card">
-                <a href="product.html?id=${
-                  product.id
-                }" class="product__img-link">
-                    <img src="${product.image}" alt="${
-          product.name
-        }" class="product__img">
+                <a href="product.html?id=${product.id
+          }" class="product__img-link">
+                    <img src="${product.image}" alt="${product.name
+          }" class="product__img">
                 </a>
                 <div class="product__content">
                     <h3 class="product__title">
-                        <a href="product.html?id=${product.id}">${
-          product.name
-        }</a>
+                        <a href="product.html?id=${product.id}">${product.name
+          }</a>
                     </h3>
                     <p class="product__description">${product.description}</p>
                     <p class="product__price">$${product.price.toFixed(2)}</p>
                     <div class="product__buttons">
-                        <a href="product.html?id=${
-                          product.id
-                        }" class="button button--secondary" onclick={()=>dataLayer.push({
-                          event: 'ver_producto',
-                          product_id: product.id,
-                          product_name: product.name
+                        <a href="product.html?id=${product.id
+          }" class="button button--secondary" onclick="dataLayer.push({
+    event: 'ver_producto',
+    product_id: '${product.id}',
+    product_name: '${product.name}'
+  })"
                         })}">Ver Detalles</a>
-                        <button class="button product__button" data-id="${
-                          product.id
-                        }">
+                        <button class="button product__button" data-id="${product.id
+          }">
                             <i class="fas fa-cart-plus"></i>
                         </button>
                     </div>
