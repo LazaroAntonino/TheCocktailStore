@@ -105,7 +105,7 @@ export class ProductsUI {
                     <div class="product__buttons">
                         <a href="product.html?id=${
                           product.id
-                        }" class="button button--secondary">Ver Detalles</a>
+                        }" class="button button--secondary" data-product-name="${product.name}">Ver Detalles</a>
                         <button class="button product__button" data-id="${
                           product.id
                         }">
