@@ -88,21 +88,21 @@ export class ProductsUI {
         (product) => `
             <article class="product__card">
                 <a href="product.html?id=${product.id
-          }" class="product__img-link" id="${product.id} / ${product.name}">
+          }" class="product__img-link" id="${product.id}-${product.name}">
                     <img src="${product.image}" alt="${product.name
           }" class="product__img">
                 </a>
                 <div class="product__content">
                     <h3 class="product__title">
                         <a href="product.html?id=${product.id}">${product.name
-          } id="${product.id} / ${product.name}</a>
+          } id="${product.id}-${product.name}"</a>
                     </h3>
                     <p class="product__description">${product.description}</p>
                     <p class="product__price">$${product.price.toFixed(2)}</p>
                     <div class="product__buttons">
                         <a href="product.html?id=${product.id
           }" class="button button--secondary" 
-                        })} id="${product.id} / ${product.name}">Ver Detalles</a>
+                        })} id="${product.id}-${product.name}">Ver Detalles</a>
                         <button class="button product__button" data-id="${product.id
           }">
                             <i class="fas fa-cart-plus"></i>
