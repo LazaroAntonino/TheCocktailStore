@@ -102,7 +102,7 @@ export class ProductsUI {
                     <div class="product__buttons">
                         <a href="product.html?id=${product.id
           }" class="button button--secondary" 
-                        })} id="${product.id}-${product.name}">Ver Detalles</a>
+                        })} id="${product.id}-${product.name}">Ver Detalles Producto</a>
                         <button class="button product__button" data-id="${product.id
           }">
                             <i class="fas fa-cart-plus"></i>
