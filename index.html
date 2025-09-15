@@ -2,15 +2,15 @@
 <html lang="es">
 
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C2NZQ5V1Q0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C2NZQ5V1Q0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-C2NZQ5V1Q0');
-</script>
+    gtag('config', 'G-C2NZQ5V1Q0');
+  </script>
   <!-- Google Tag Manager -->
   <script>(function (w, d, s, l, i) {
       w[l] = w[l] || []; w[l].push({
@@ -33,7 +33,7 @@
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59X9LZNR" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->    
+  <!-- End Google Tag Manager (noscript) -->
   <header class="header">
     <nav class="nav container">
       <a href="/" class="nav__logo">
@@ -85,10 +85,11 @@
             precio.
           </p>
           <a href="#products" class="button" onclick='dataLayer.push({
-            event: "Toni ClickPrueba desde Código",
-            event_category: "prueba desde código toni",
-            event_action: "action prueba desde código toni",
-            event_label: "label prueba desde código"
+            event: "hero_scroll_to_products",
+            event_category: "interaction",
+            event_action: "scroll_to_sectoin",
+            event_label: "ver_productos",
+            target_section: "nuestros_productos"
           })'>Ver Productos</a>
         </div>
       </div>
@@ -106,16 +107,36 @@
         <h2 class="section__title">Nuestros Productos</h2>
 
         <div class="products__filters">
-          <button class="filter__button active" data-filter="all">
+          <button class="filter__button active" data-filter="all" onclick='dataLayer.push({
+      event: "products_filter",
+      event_category: "product_interaction",
+      event_action: "filter",
+      event_label: "todos"
+    });'>
             Todos
           </button>
-          <button class="filter__button" data-filter="laptops">
+          <button class="filter__button" data-filter="laptops" onclick='dataLayer.push({
+      event: "products_filter",
+      event_category: "product_interaction",
+      event_action: "filter",
+      event_label: "laptops"
+    });'>
             Laptops
           </button>
-          <button class="filter__button" data-filter="smartphones">
+          <button class="filter__button" data-filter="smartphones" onclick='dataLayer.push({
+      event: "products_filter",
+      event_category: "product_interaction",
+      event_action: "filter",
+      event_label: "smortphones"
+    });'>
             Smartphones
           </button>
-          <button class="filter__button" data-filter="accessories">
+          <button class="filter__button" data-filter="accessories" onclick='dataLayer.push({
+      event: "products_filter",
+      event_category: "product_interaction",
+      event_action: "filter",
+      event_label: "accesorios"
+    });'>
             Accesorios
           </button>
         </div>

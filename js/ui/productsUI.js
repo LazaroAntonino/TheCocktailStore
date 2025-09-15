@@ -101,7 +101,21 @@ export class ProductsUI {
                     <p class="product__price">$${product.price.toFixed(2)}</p>
                     <div class="product__buttons">
                         <a href="product.html?id=${product.id
-          }" class="button button--secondary" 
+          }" onclick="
+                    dataLayer.push({
+                      event: 'product_details_view',
+                      event_category: 'ecommerce',
+                      event_action: 'view_product_button_details',
+                      event_label: '${product.name}',
+                      product_id: '${product.id}',
+                      product_name: '${product.name}',
+                      product_price: '${product.price.toFixed(2)}',
+                      product_list_position: '${product.id}', // Usar la posición calculada
+                      currency: 'USD',
+                      link_url: 'product.html?id=${product.id}'
+                    });
+                    // return false; // Descomentar si quieres prevenir la navegación por defecto
+                  " class="button button--secondary" 
                         })} id="${product.id}-${product.name}">Ver Detalles Producto</a>
                         <button class="button product__button" data-id="${product.id
           }">
