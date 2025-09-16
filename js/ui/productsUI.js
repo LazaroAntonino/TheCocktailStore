@@ -142,7 +142,19 @@ export class ProductsUI {
                     });
                   " class="button button--secondary" 
                         })} id="${product.id}-${product.name}">Ver Detalles Producto</a>
-                        <button class="button product__button" data-id="${product.id
+                        <button class="button product__button" onclick="
+                    dataLayer.push({
+                      event: 'add_to_cart',
+                      event_category: 'ecommerce',
+                      event_action: 'add_to_cart_card',
+                      event_label: 'add_to_cart',
+                      product_id: '${product.id}',
+                      product_name: '${product.name}',
+                      product_price: '${product.price.toFixed(2)}',
+                      product_list_position: '${product.id}', // Usar la posición calculada
+                      currency: 'USD',
+                    });
+                  " data-id="${product.id
           }">
                             <i class="fas fa-cart-plus"></i>
                         </button>
