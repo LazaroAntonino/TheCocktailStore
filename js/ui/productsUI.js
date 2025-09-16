@@ -90,12 +90,38 @@ export class ProductsUI {
                 <a href="product.html?id=${product.id
           }" class="product__img-link" id="${product.id}-${product.name}">
                     <img src="${product.image}" alt="${product.name
-          }" class="product__img">
+          }" class="product__img" onclick="
+                    dataLayer.push({
+                      event: 'product_details_view',
+                      event_category: 'ecommerce',
+                      event_action: 'view_product_card_details',
+                      event_label: '${product.name}',
+                      product_id: '${product.id}',
+                      product_name: '${product.name}',
+                      product_price: '${product.price.toFixed(2)}',
+                      product_list_position: '${product.id}', // Usar la posición calculada
+                      currency: 'USD',
+                      link_url: 'product.html?id=${product.id}'
+                    });
+                  " >
                 </a>
                 <div class="product__content">
                     <h3 class="product__title">
                         <a href="product.html?id=${product.id}">${product.name
-          } id="${product.id}-${product.name}"</a>
+          } id="${product.id}-${product.name}" onclick="
+                    dataLayer.push({
+                      event: 'product_details_view',
+                      event_category: 'ecommerce',
+                      event_action: 'view_product_card_details',
+                      event_label: '${product.name}',
+                      product_id: '${product.id}',
+                      product_name: '${product.name}',
+                      product_price: '${product.price.toFixed(2)}',
+                      product_list_position: '${product.id}', // Usar la posición calculada
+                      currency: 'USD',
+                      link_url: 'product.html?id=${product.id}'
+                    });
+                  " </a>
                     </h3>
                     <p class="product__description">${product.description}</p>
                     <p class="product__price">$${product.price.toFixed(2)}</p>
@@ -114,7 +140,6 @@ export class ProductsUI {
                       currency: 'USD',
                       link_url: 'product.html?id=${product.id}'
                     });
-                    // return false; // Descomentar si quieres prevenir la navegación por defecto
                   " class="button button--secondary" 
                         })} id="${product.id}-${product.name}">Ver Detalles Producto</a>
                         <button class="button product__button" data-id="${product.id
