@@ -110,7 +110,7 @@ export class ProductsUI {
                     dataLayer.push({
                       event: 'product_details_view',
                       event_category: 'ecommerce',
-                      event_action: 'view_product_card_details',
+                      event_action: 'view_product_title_details',
                       event_label: '${product.name}',
                       product_id: '${product.id}',
                       product_name: '${product.name}',
