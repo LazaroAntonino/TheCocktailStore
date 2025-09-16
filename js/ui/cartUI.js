@@ -88,11 +88,11 @@ dataLayer.push({
     event_category: 'ecommerce',
     event_action: 'click_remove_item',
     event_label: 'remove_item',
-    currency: 'EUR', // O la variable JavaScript que contenga la moneda, si es dinámica
-    product_id:"${item.id}", // Asegúrate de que esta variable esté definida en tu GTM o sea una variable JS
-    product_name:'nombre', // Asegúrate de que esta variable esté definida en tu GTM o sea una variable JS
-    product_price: "${item.price}", // Asegúrate de que esta variable esté definida en tu GTM o sea una variable JS
-    quantity: "${item.quantity}" // Asegúrate de que esta variable esté definida en tu GTM o sea una variable JS
+    currency: 'EUR',
+    product_id:${item.id},
+    product_name:"${item.name}",
+    product_price: ${item.price},
+    quantity:${item.quantity}
 });
 ">&times;</button>
           </div>
