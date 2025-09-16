@@ -31,9 +31,9 @@
 
 <body>
   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5ZV455JH"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5ZV455JH" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <header class="header">
     <nav class="nav container">
       <a href="/" class="nav__logo">
@@ -150,7 +150,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="cart-modal__content">
       <div class="cart-modal__header">
         <h3>Tu Carrito</h3>
-        <button class="cart-modal__close">&times;</button>
+        <button class="cart-modal__close" onclick="
+dataLayer.push({
+    event: 'sidebar_cart_close',
+    event_category: 'ecommerce',
+    event_action: 'click_close_sidebar',
+    event_label: 'close_sidebar',
+});
+">&times;</button>
       </div>
       <div class="cart-modal__items"></div>
       <div class="cart-modal__footer">
