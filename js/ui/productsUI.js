@@ -107,7 +107,7 @@ export class ProductsUI {
                 </a>
                 <div class="product__content">
                     <h3 class="product__title">
-                        <a href="product.html?id=${product.id}"  onclick="
+                        <a href="product.html?id=${product.id}"   onclick="
                     dataLayer.push({
                       event: 'product_details_view',
                       event_category: 'ecommerce',
