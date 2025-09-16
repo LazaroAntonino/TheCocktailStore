@@ -121,7 +121,7 @@ export class ProductsUI {
                       link_url: 'product.html?id=${product.id}'
                     });
                   ">${product.name
-          } id="${product.id}-${product.name}"</a>
+          } ${product.name}"</a>
                     </h3>
                     <p class="product__description">${product.description}</p>
                     <p class="product__price">$${product.price.toFixed(2)}</p>
