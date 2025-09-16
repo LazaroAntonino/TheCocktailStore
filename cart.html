@@ -1,191 +1,213 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carrito de Compra - TheCocktailStore</title>
-    <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="css/styles.css" />
-    <style>
-      .cart-page {
-        padding: 2rem 0;
-      }
 
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C2NZQ5V1Q0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-C2NZQ5V1Q0');
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-59X9LZNR');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito de Compra - TheCocktailStore</title>
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .cart-page {
+      padding: 2rem 0;
+    }
+
+    .cart-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .cart-items {
+      background-color: var(--bg-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto auto auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .item-image img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+
+    .item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quantity-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: var(--bg-color-alt);
+      color: var(--text-color);
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .quantity-btn:hover {
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+    }
+
+    .cart-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .cart-summary,
+    .coupon-section {
+      background-color: var(--bg-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .summary-row.total {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      border-bottom: none;
+    }
+
+    .checkout-button {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .continue-shopping {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: var(--primary-color);
+    }
+
+    .coupon-form {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .coupon-form input {
+      flex: 1;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 3rem 0;
+    }
+
+    .cart-empty p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-color-light);
+    }
+
+    .remove-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-size: 1.25rem;
+      color: var(--text-color-light);
+      cursor: pointer;
+      transition: 0.3s;
+      background: none;
+      border: none;
+    }
+
+    .remove-btn:hover {
+      color: var(--accent-color);
+    }
+
+    .disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @media screen and (max-width: 768px) {
       .cart-container {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 2rem;
-        margin-top: 2rem;
-      }
-
-      .cart-items {
-        background-color: var(--bg-color);
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        grid-template-columns: 1fr;
       }
 
       .cart-item {
-        display: grid;
-        grid-template-columns: 100px 1fr auto auto auto;
-        align-items: center;
-        gap: 1rem;
-        padding: 1rem 0;
-        border-bottom: 1px solid var(--border-color);
-        position: relative;
+        grid-template-columns: 80px 1fr;
+        grid-template-rows: auto auto auto;
       }
 
-      .item-image img {
-        width: 80px;
-        height: 80px;
-        object-fit: cover;
-        border-radius: 0.5rem;
+      .item-image {
+        grid-row: span 3;
       }
 
-      .item-quantity {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+      .item-quantity,
+      .item-total {
+        grid-column: 2;
       }
+    }
+  </style>
+</head>
 
-      .quantity-btn {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background-color: var(--bg-color-alt);
-        color: var(--text-color);
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: 0.3s;
-      }
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59X9LZNR" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <header class="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo">
+        <i class="fas fa-laptop"></i>
+        The Cocktail Store
+      </a>
 
-      .quantity-btn:hover {
-        background-color: var(--primary-color);
-        color: var(--bg-color);
-      }
-
-      .cart-sidebar {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-
-      .cart-summary,
-      .coupon-section {
-        background-color: var(--bg-color);
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .summary-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid var(--border-color);
-      }
-
-      .summary-row.total {
-        font-weight: bold;
-        font-size: 1.2rem;
-        color: var(--primary-color);
-        border-bottom: none;
-      }
-
-      .checkout-button {
-        width: 100%;
-        margin-top: 1rem;
-      }
-
-      .continue-shopping {
-        display: block;
-        text-align: center;
-        margin-top: 1rem;
-        color: var(--primary-color);
-      }
-
-      .coupon-form {
-        display: flex;
-        gap: 0.5rem;
-      }
-
-      .coupon-form input {
-        flex: 1;
-        padding: 0.75rem;
-        border: 1px solid var(--border-color);
-        border-radius: 0.5rem;
-      }
-
-      .cart-empty {
-        text-align: center;
-        padding: 3rem 0;
-      }
-
-      .cart-empty p {
-        font-size: 1.2rem;
-        margin-bottom: 1.5rem;
-        color: var(--text-color-light);
-      }
-
-      .remove-btn {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        font-size: 1.25rem;
-        color: var(--text-color-light);
-        cursor: pointer;
-        transition: 0.3s;
-        background: none;
-        border: none;
-      }
-
-      .remove-btn:hover {
-        color: var(--accent-color);
-      }
-
-      .disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-
-      @media screen and (max-width: 768px) {
-        .cart-container {
-          grid-template-columns: 1fr;
-        }
-
-        .cart-item {
-          grid-template-columns: 80px 1fr;
-          grid-template-rows: auto auto auto;
-        }
-
-        .item-image {
-          grid-row: span 3;
-        }
-
-        .item-quantity,
-        .item-total {
-          grid-column: 2;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header class="header">
-      <nav class="nav container">
-        <a href="/" class="nav__logo">
-          <i class="fas fa-laptop"></i>
-          The Cocktail Store
-        </a>
-
-        <!-- <div class="nav__menu">
+      <!-- <div class="nav__menu">
           <ul class="nav__list">
             <li class="nav__item">
               <a href="/" class="nav__link">Inicio</a>
@@ -199,159 +221,145 @@
           </ul>
         </div> -->
 
-        <div class="nav__actions">
-          <div class="nav__search">
-            <input
-              type="text"
-              placeholder="Buscar productos..."
-              class="nav__search-input"
-            />
-            <i class="fas fa-search nav__search-icon"></i>
-          </div>
+      <div class="nav__actions">
+        <div class="nav__search">
+          <input type="text" placeholder="Buscar productos..." class="nav__search-input" />
+          <i class="fas fa-search nav__search-icon"></i>
+        </div>
 
-          <div class="nav__cart">
-            <i class="fas fa-shopping-cart nav__cart-icon"></i>
-            <span class="nav__cart-count">0</span>
-          </div>
+        <div class="nav__cart">
+          <i class="fas fa-shopping-cart nav__cart-icon"></i>
+          <span class="nav__cart-count">0</span>
+        </div>
 
-          <div class="nav__user">
-            <a href="https://github.com/EduardoHernandezGuzman" target="_blank">
-              <i class="fa-solid fa-code"></i>
+        <div class="nav__user">
+          <a href="https://github.com/EduardoHernandezGuzman" target="_blank">
+            <i class="fa-solid fa-code"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main" style="margin-top: 4rem">
+    <section class="cart-page container">
+      <h1 class="page-title">Tu Carrito de Compra</h1>
+
+      <div class="cart-container">
+        <div class="cart-items">
+          <div class="cart-empty" style="display: none">
+            <p>Tu carrito está vacío</p>
+            <a href="/" class="button">Continuar Comprando</a>
+          </div>
+        </div>
+
+        <div class="cart-sidebar">
+          <div class="cart-summary">
+            <h3>Resumen del Pedido</h3>
+
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span class="cart-subtotal">$0.00</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Envío</span>
+              <span>Calculado en el checkout</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Impuestos</span>
+              <span>Calculado en el checkout</span>
+            </div>
+
+            <div class="summary-row total">
+              <span>Total Estimado</span>
+              <span class="cart-total">$0.00</span>
+            </div>
+
+            <a href="checkout.html" class="button button--primary checkout-button">
+              Proceder al Checkout
             </a>
-          </div>
-        </div>
-      </nav>
-    </header>
 
-    <main class="main" style="margin-top: 4rem">
-      <section class="cart-page container">
-        <h1 class="page-title">Tu Carrito de Compra</h1>
-
-        <div class="cart-container">
-          <div class="cart-items">
-            <div class="cart-empty" style="display: none">
-              <p>Tu carrito está vacío</p>
-              <a href="/" class="button">Continuar Comprando</a>
-            </div>
+            <a href="/" class="continue-shopping"> Continuar Comprando </a>
           </div>
 
-          <div class="cart-sidebar">
-            <div class="cart-summary">
-              <h3>Resumen del Pedido</h3>
-
-              <div class="summary-row">
-                <span>Subtotal</span>
-                <span class="cart-subtotal">$0.00</span>
-              </div>
-
-              <div class="summary-row">
-                <span>Envío</span>
-                <span>Calculado en el checkout</span>
-              </div>
-
-              <div class="summary-row">
-                <span>Impuestos</span>
-                <span>Calculado en el checkout</span>
-              </div>
-
-              <div class="summary-row total">
-                <span>Total Estimado</span>
-                <span class="cart-total">$0.00</span>
-              </div>
-
-              <a
-                href="checkout.html"
-                class="button button--primary checkout-button"
-              >
-                Proceder al Checkout
-              </a>
-
-              <a href="/" class="continue-shopping"> Continuar Comprando </a>
-            </div>
-
-            <div class="coupon-section">
-              <h3>Cupón de Descuento</h3>
-              <div class="coupon-form">
-                <input type="text" placeholder="Código de cupón" />
-                <button class="button apply-coupon">Aplicar</button>
-              </div>
+          <div class="coupon-section">
+            <h3>Cupón de Descuento</h3>
+            <div class="coupon-form">
+              <input type="text" placeholder="Código de cupón" />
+              <button class="button apply-coupon">Aplicar</button>
             </div>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+  </main>
 
-    <div class="cart-modal" id="cartModal">
-      <div class="cart-modal__content">
-        <div class="cart-modal__header">
-          <h3>Tu Carrito</h3>
-          <button class="cart-modal__close">&times;</button>
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-modal__content">
+      <div class="cart-modal__header">
+        <h3>Tu Carrito</h3>
+        <button class="cart-modal__close">&times;</button>
+      </div>
+      <div class="cart-modal__items"></div>
+      <div class="cart-modal__footer">
+        <div class="cart-modal__total">
+          <span>Total:</span>
+          <span class="cart-modal__total-amount">$0.00</span>
         </div>
-        <div class="cart-modal__items"></div>
-        <div class="cart-modal__footer">
-          <div class="cart-modal__total">
-            <span>Total:</span>
-            <span class="cart-modal__total-amount">$0.00</span>
-          </div>
-          <a href="cart.html" class="button button--secondary">Ver Carrito</a>
-          <a href="checkout.html" class="button button--primary"
-            >Proceder al Pago</a
-          >
-        </div>
+        <a href="cart.html" class="button button--secondary">Ver Carrito</a>
+        <a href="checkout.html" class="button button--primary">Proceder al Pago</a>
       </div>
     </div>
+  </div>
 
-    <footer class="footer">
-      <div class="footer__container container">
-        <div class="footer__content">
-          <div class="footer__section">
-            <h3 class="footer__title">The Cocktail Store</h3>
-            <p class="footer__description">
-              Tu tienda de confianza para productos tecnológicos de alta
-              calidad.
-            </p>
-          </div>
-
-          <div class="footer__section">
-            <h3 class="footer__title">Enlaces</h3>
-            <ul class="footer__links">
-              <li><a href="#home">Inicio</a></li>
-              <li><a href="#products">Productos</a></li>
-              <li><a href="#categories">Categorías</a></li>
-            </ul>
-          </div>
-
-          <div class="footer__section">
-            <h3 class="footer__title">Contacto</h3>
-            <ul class="footer__contact">
-              <li><i class="fas fa-phone"></i> +34 123 456 789</li>
-              <li><i class="fas fa-envelope"></i> info@TheCocktailStore.com</li>
-              <li><i class="fas fa-map-marker-alt"></i> Madrid, España</li>
-            </ul>
-          </div>
-
-          <div class="footer__section">
-            <h3 class="footer__title">Redes Sociales</h3>
-            <div class="footer__social">
-              <a href="#" class="footer__social-link"
-                ><i class="fab fa-facebook"></i
-              ></a>
-              <a href="#" class="footer__social-link"
-                ><i class="fab fa-twitter"></i
-              ></a>
-              <a href="#" class="footer__social-link"
-                ><i class="fab fa-instagram"></i
-              ></a>
-            </div>
-          </div>
+  <footer class="footer">
+    <div class="footer__container container">
+      <div class="footer__content">
+        <div class="footer__section">
+          <h3 class="footer__title">The Cocktail Store</h3>
+          <p class="footer__description">
+            Tu tienda de confianza para productos tecnológicos de alta
+            calidad.
+          </p>
         </div>
 
-        <div class="footer__bottom">
-          <p>&copy; 2024 TheCocktailStore. Todos los derechos reservados.</p>
+        <div class="footer__section">
+          <h3 class="footer__title">Enlaces</h3>
+          <ul class="footer__links">
+            <li><a href="#home">Inicio</a></li>
+            <li><a href="#products">Productos</a></li>
+            <li><a href="#categories">Categorías</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__section">
+          <h3 class="footer__title">Contacto</h3>
+          <ul class="footer__contact">
+            <li><i class="fas fa-phone"></i> +34 123 456 789</li>
+            <li><i class="fas fa-envelope"></i> info@TheCocktailStore.com</li>
+            <li><i class="fas fa-map-marker-alt"></i> Madrid, España</li>
+          </ul>
+        </div>
+
+        <div class="footer__section">
+          <h3 class="footer__title">Redes Sociales</h3>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="footer__social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer__social-link"><i class="fab fa-instagram"></i></a>
+          </div>
         </div>
       </div>
-    </footer>
 
-    <script src="js/cartPage.js" type="module"></script>
-  </body>
+      <div class="footer__bottom">
+        <p>&copy; 2024 TheCocktailStore. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cartPage.js" type="module"></script>
+</body>
+
 </html>

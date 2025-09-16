@@ -1,154 +1,164 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout - TheCocktailStore</title>
-    <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <header class="checkout-header">
-      <div class="container">
-        <a href="/" class="nav__logo">
-          <i class="fas fa-laptop"></i>
-          The Cocktail Store
-        </a>
-        <div class="checkout-steps">
-          <div class="step active">
-            <span class="step-number">1</span>
-            <span class="step-name">Envío</span>
-          </div>
-          <div class="step">
-            <span class="step-number">2</span>
-            <span class="step-name">Pago</span>
-          </div>
-          <div class="step">
-            <span class="step-number">3</span>
-            <span class="step-name">Confirmación</span>
-          </div>
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C2NZQ5V1Q0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-C2NZQ5V1Q0');
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-59X9LZNR');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout - TheCocktailStore</title>
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59X9LZNR" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <header class="checkout-header">
+    <div class="container">
+      <a href="/" class="nav__logo">
+        <i class="fas fa-laptop"></i>
+        The Cocktail Store
+      </a>
+      <div class="checkout-steps">
+        <div class="step active">
+          <span class="step-number">1</span>
+          <span class="step-name">Envío</span>
+        </div>
+        <div class="step">
+          <span class="step-number">2</span>
+          <span class="step-name">Pago</span>
+        </div>
+        <div class="step">
+          <span class="step-number">3</span>
+          <span class="step-name">Confirmación</span>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="main">
-      <div class="checkout-container container">
-        <div class="checkout-form-container">
-          <h1>Información de Envío</h1>
+  <main class="main">
+    <div class="checkout-container container">
+      <div class="checkout-form-container">
+        <h1>Información de Envío</h1>
 
-          <form id="shipping-form" class="checkout-form">
-            <div class="form-group">
-              <label for="fullname">Nombre completo</label>
-              <input type="text" id="fullname" name="fullname" required />
-            </div>
-
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required />
-            </div>
-
-            <div class="form-group">
-              <label for="phone">Teléfono</label>
-              <input type="tel" id="phone" name="phone" required />
-            </div>
-
-            <div class="form-group">
-              <label for="address">Dirección</label>
-              <input type="text" id="address" name="address" required />
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="city">Ciudad</label>
-                <input type="text" id="city" name="city" required />
-              </div>
-
-              <div class="form-group">
-                <label for="postal">Código Postal</label>
-                <input type="text" id="postal" name="postal" required />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="country">País</label>
-              <select id="country" name="country" required>
-                <option value="">Selecciona un país</option>
-                <option value="ES">España</option>
-                <option value="MX">México</option>
-                <option value="AR">Argentina</option>
-                <option value="CO">Colombia</option>
-                <option value="CL">Chile</option>
-              </select>
-            </div>
-
-            <div class="shipping-methods">
-              <h3>Método de Envío</h3>
-
-              <div class="shipping-option">
-                <input
-                  type="radio"
-                  id="standard"
-                  name="shipping"
-                  value="standard"
-                  checked
-                />
-                <label for="standard">
-                  <div class="shipping-option-info">
-                    <span class="shipping-name">Envío Estándar</span>
-                    <span class="shipping-time">3-5 días laborables</span>
-                  </div>
-                  <span class="shipping-price">€4.99</span>
-                </label>
-              </div>
-
-              <div class="shipping-option">
-                <input
-                  type="radio"
-                  id="express"
-                  name="shipping"
-                  value="express"
-                />
-                <label for="express">
-                  <div class="shipping-option-info">
-                    <span class="shipping-name">Envío Express</span>
-                    <span class="shipping-time">1-2 días laborables</span>
-                  </div>
-                  <span class="shipping-price">€9.99</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <a href="/cart.html" class="button button--secondary"
-                >Volver al Carrito</a
-              >
-              <button type="submit" class="button button--primary">
-                Continuar a Pago
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <div class="checkout-sidebar">
-          <div class="order-summary">
-            <h3>Resumen del Pedido</h3>
-            <div class="order-items"></div>
-            <div class="order-totals"></div>
+        <form id="shipping-form" class="checkout-form">
+          <div class="form-group">
+            <label for="fullname">Nombre completo</label>
+            <input type="text" id="fullname" name="fullname" required />
           </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Teléfono</label>
+            <input type="tel" id="phone" name="phone" required />
+          </div>
+
+          <div class="form-group">
+            <label for="address">Dirección</label>
+            <input type="text" id="address" name="address" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">Ciudad</label>
+              <input type="text" id="city" name="city" required />
+            </div>
+
+            <div class="form-group">
+              <label for="postal">Código Postal</label>
+              <input type="text" id="postal" name="postal" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="country">País</label>
+            <select id="country" name="country" required>
+              <option value="">Selecciona un país</option>
+              <option value="ES">España</option>
+              <option value="MX">México</option>
+              <option value="AR">Argentina</option>
+              <option value="CO">Colombia</option>
+              <option value="CL">Chile</option>
+            </select>
+          </div>
+
+          <div class="shipping-methods">
+            <h3>Método de Envío</h3>
+
+            <div class="shipping-option">
+              <input type="radio" id="standard" name="shipping" value="standard" checked />
+              <label for="standard">
+                <div class="shipping-option-info">
+                  <span class="shipping-name">Envío Estándar</span>
+                  <span class="shipping-time">3-5 días laborables</span>
+                </div>
+                <span class="shipping-price">€4.99</span>
+              </label>
+            </div>
+
+            <div class="shipping-option">
+              <input type="radio" id="express" name="shipping" value="express" />
+              <label for="express">
+                <div class="shipping-option-info">
+                  <span class="shipping-name">Envío Express</span>
+                  <span class="shipping-time">1-2 días laborables</span>
+                </div>
+                <span class="shipping-price">€9.99</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <a href="/cart.html" class="button button--secondary">Volver al Carrito</a>
+            <button type="submit" class="button button--primary">
+              Continuar a Pago
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="checkout-sidebar">
+        <div class="order-summary">
+          <h3>Resumen del Pedido</h3>
+          <div class="order-items"></div>
+          <div class="order-totals"></div>
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <footer class="footer checkout-footer">
-      <div class="container">
-        <p>&copy; 2024 TheCocktailStore. Todos los derechos reservados.</p>
-      </div>
-    </footer>
+  <footer class="footer checkout-footer">
+    <div class="container">
+      <p>&copy; 2024 TheCocktailStore. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
-    <script src="js/checkout.js" type="module"></script>
-  </body>
+  <script src="js/checkout.js" type="module"></script>
+</body>
+
 </html>

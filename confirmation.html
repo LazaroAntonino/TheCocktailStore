@@ -1,86 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Confirmación de Pedido - TheCocktailStore</title>
-    <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <header class="checkout-header">
-      <div class="container">
-        <a href="/" class="nav__logo">
-          <i class="fas fa-laptop"></i>
-          The Cocktail Store
-        </a>
-        <div class="checkout-steps">
-          <div class="step completed">
-            <span class="step-number"><i class="fas fa-check"></i></span>
-            <span class="step-name">Envío</span>
-          </div>
-          <div class="step completed">
-            <span class="step-number"><i class="fas fa-check"></i></span>
-            <span class="step-name">Pago</span>
-          </div>
-          <div class="step active">
-            <span class="step-number">3</span>
-            <span class="step-name">Confirmación</span>
-          </div>
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C2NZQ5V1Q0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-C2NZQ5V1Q0');
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-59X9LZNR');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmación de Pedido - TheCocktailStore</title>
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59X9LZNR" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <header class="checkout-header">
+    <div class="container">
+      <a href="/" class="nav__logo">
+        <i class="fas fa-laptop"></i>
+        The Cocktail Store
+      </a>
+      <div class="checkout-steps">
+        <div class="step completed">
+          <span class="step-number"><i class="fas fa-check"></i></span>
+          <span class="step-name">Envío</span>
+        </div>
+        <div class="step completed">
+          <span class="step-number"><i class="fas fa-check"></i></span>
+          <span class="step-name">Pago</span>
+        </div>
+        <div class="step active">
+          <span class="step-number">3</span>
+          <span class="step-name">Confirmación</span>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="main">
-      <div class="confirmation-container container">
-        <div class="order-confirmation">
-          <div class="confirmation-icon">
-            <i class="fas fa-check-circle"></i>
-          </div>
+  <main class="main">
+    <div class="confirmation-container container">
+      <div class="order-confirmation">
+        <div class="confirmation-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
 
-          <h1>¡Gracias por tu compra!</h1>
-          <p>
-            Tu pedido #<span class="order-number"></span> ha sido recibido y
-            está siendo procesado.
-          </p>
+        <h1>¡Gracias por tu compra!</h1>
+        <p>
+          Tu pedido #<span class="order-number"></span> ha sido recibido y
+          está siendo procesado.
+        </p>
 
-          <div class="order-details">
-            <h3>Detalles del Pedido</h3>
-          </div>
+        <div class="order-details">
+          <h3>Detalles del Pedido</h3>
+        </div>
 
-          <div class="order-items-container">
-            <h3>Productos</h3>
-            <div class="order-items"></div>
-          </div>
+        <div class="order-items-container">
+          <h3>Productos</h3>
+          <div class="order-items"></div>
+        </div>
 
-          <div class="order-summary">
-            <div class="summary-row total">
-              <span>Total</span>
-              <span class="order-total">$0.00</span>
-            </div>
-          </div>
-
-          <p>
-            Recibirás un email de confirmación con los detalles de tu pedido.
-          </p>
-
-          <div class="confirmation-actions">
-            <a href="/" class="button button--primary">Continuar Comprando</a>
+        <div class="order-summary">
+          <div class="summary-row total">
+            <span>Total</span>
+            <span class="order-total">$0.00</span>
           </div>
         </div>
-      </div>
-    </main>
 
-    <footer class="footer checkout-footer">
-      <div class="container">
-        <p>&copy; 2024 TheCocktailStore. Todos los derechos reservados.</p>
-      </div>
-    </footer>
+        <p>
+          Recibirás un email de confirmación con los detalles de tu pedido.
+        </p>
 
-    <script src="js/confirmation.js" type="module"></script>
-  </body>
+        <div class="confirmation-actions">
+          <a href="/" class="button button--primary">Continuar Comprando</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer checkout-footer">
+    <div class="container">
+      <p>&copy; 2024 TheCocktailStore. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/confirmation.js" type="module"></script>
+</body>
+
 </html>

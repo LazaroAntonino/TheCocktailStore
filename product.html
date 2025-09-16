@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Detalle de Producto - SatruxStore</title>
-    <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <header class="header">
-      <nav class="nav container">
-        <a href="/" class="nav__logo">
-          <i class="fas fa-laptop"></i>
-          The Cocktail Store
-        </a>
 
-        <!-- <div class="nav__menu">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C2NZQ5V1Q0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-C2NZQ5V1Q0');
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-59X9LZNR');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle de Producto - SatruxStore</title>
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59X9LZNR" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <header class="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo">
+        <i class="fas fa-laptop"></i>
+        The Cocktail Store
+      </a>
+
+      <!-- <div class="nav__menu">
           <ul class="nav__list">
             <li class="nav__item">
               <a href="/" class="nav__link">Inicio</a>
@@ -33,106 +55,101 @@
           </ul>
         </div> -->
 
-        <div class="nav__actions">
-          <div class="nav__search">
-            <input
-              type="text"
-              placeholder="Buscar productos..."
-              class="nav__search-input"
-            />
-            <i class="fas fa-search nav__search-icon"></i>
-          </div>
-
-          <div class="nav__cart">
-            <i class="fas fa-shopping-cart nav__cart-icon"></i>
-            <span class="nav__cart-count">0</span>
-          </div>
-
-          <div class="nav__user">
-            <a href="https://github.com/EduardoHernandezGuzman" target="_blank">
-              <i class="fa-solid fa-code"></i>
-            </a>
-          </div>
-        </div>
-      </nav>
-    </header>
-
-    <main class="main">
-      <div class="breadcrumbs container">
-        <a href="/">Inicio</a> >
-        <a href="#" class="category-link">Categoría</a> >
-        <span class="product-name">Nombre del Producto</span>
-      </div>
-
-      <section class="product-detail container">
-        <div class="product-gallery">
-          <div class="main-image">
-            <img src="" alt="" id="main-product-image" />
-          </div>
-          <div class="thumbnail-images"></div>
+      <div class="nav__actions">
+        <div class="nav__search">
+          <input type="text" placeholder="Buscar productos..." class="nav__search-input" />
+          <i class="fas fa-search nav__search-icon"></i>
         </div>
 
-        <div class="product-info">
-          <h1 class="product-title"></h1>
-          <div class="product-rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-            <span>(4.5)</span>
-          </div>
-          <p class="product-price"></p>
-          <div class="product-description"></div>
-
-          <div class="product-actions">
-            <div class="quantity-selector">
-              <button class="quantity-btn minus">-</button>
-              <input type="number" value="1" min="1" id="quantity" />
-              <button class="quantity-btn plus">+</button>
-            </div>
-            <button class="button button--primary add-to-cart">
-              Añadir al Carrito
-            </button>
-            <!-- <button class="button button--secondary add-to-wishlist">
-              <i class="far fa-heart"></i>
-            </button> -->
-          </div>
-
-          <div class="product-meta">
-            <p>
-              <strong>Disponibilidad:</strong>
-              <span class="stock-status"></span>
-            </p>
-            <p><strong>SKU:</strong> <span class="sku"></span></p>
-            <p><strong>Categoría:</strong> <span class="category"></span></p>
-          </div>
+        <div class="nav__cart">
+          <i class="fas fa-shopping-cart nav__cart-icon"></i>
+          <span class="nav__cart-count">0</span>
         </div>
-      </section>
-    </main>
 
-    <div class="cart-modal" id="cartModal">
-      <div class="cart-modal__content">
-        <div class="cart-modal__header">
-          <h3>Tu Carrito</h3>
-          <button class="cart-modal__close">&times;</button>
-        </div>
-        <div class="cart-modal__items"></div>
-        <div class="cart-modal__footer">
-          <div class="cart-modal__total">
-            <span>Total:</span>
-            <span class="cart-modal__total-amount">$0.00</span>
-          </div>
-          <a href="cart.html" class="button button--secondary">Ver Carrito</a>
-          <a href="checkout.html" class="button button--primary"
-            >Proceder al Pago</a
-          >
+        <div class="nav__user">
+          <a href="https://github.com/EduardoHernandezGuzman" target="_blank">
+            <i class="fa-solid fa-code"></i>
+          </a>
         </div>
       </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div class="breadcrumbs container">
+      <a href="/">Inicio</a> >
+      <a href="#" class="category-link">Categoría</a> >
+      <span class="product-name">Nombre del Producto</span>
     </div>
 
-    <footer class="footer"></footer>
+    <section class="product-detail container">
+      <div class="product-gallery">
+        <div class="main-image">
+          <img src="" alt="" id="main-product-image" />
+        </div>
+        <div class="thumbnail-images"></div>
+      </div>
 
-    <script src="js/productDetail.js" type="module"></script>
-  </body>
+      <div class="product-info">
+        <h1 class="product-title"></h1>
+        <div class="product-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+          <span>(4.5)</span>
+        </div>
+        <p class="product-price"></p>
+        <div class="product-description"></div>
+
+        <div class="product-actions">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus">-</button>
+            <input type="number" value="1" min="1" id="quantity" />
+            <button class="quantity-btn plus">+</button>
+          </div>
+          <button class="button button--primary add-to-cart">
+            Añadir al Carrito
+          </button>
+          <!-- <button class="button button--secondary add-to-wishlist">
+              <i class="far fa-heart"></i>
+            </button> -->
+        </div>
+
+        <div class="product-meta">
+          <p>
+            <strong>Disponibilidad:</strong>
+            <span class="stock-status"></span>
+          </p>
+          <p><strong>SKU:</strong> <span class="sku"></span></p>
+          <p><strong>Categoría:</strong> <span class="category"></span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-modal__content">
+      <div class="cart-modal__header">
+        <h3>Tu Carrito</h3>
+        <button class="cart-modal__close">&times;</button>
+      </div>
+      <div class="cart-modal__items"></div>
+      <div class="cart-modal__footer">
+        <div class="cart-modal__total">
+          <span>Total:</span>
+          <span class="cart-modal__total-amount">$0.00</span>
+        </div>
+        <a href="cart.html" class="button button--secondary">Ver Carrito</a>
+        <a href="checkout.html" class="button button--primary">Proceder al Pago</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"></footer>
+
+  <script src="js/productDetail.js" type="module"></script>
+</body>
+
 </html>
