@@ -70,32 +70,33 @@ export class CartUI {
     this.cartItems.innerHTML = cart
       .map(
         (item) => `
-    <div class="cart-item" data-id="${item.id}">
-        <img src="${item.image}" alt="${item.name}" class="cart-item__image">
-        <div class="cart-item__details">
-            <h4 class="cart-item__name">${item.name}</h4>
-            <p class="cart-item__price">$${item.price.toFixed(2)}</p>
-            <div class="cart-item__quantity">
-                <button class="quantity-btn" data-action="decrease">-</button>
-                <span>${item.quantity}</span>
-                <button class="quantity-btn" data-action="increase">+</button>
-            </div>
-        </div>
-        <button class="remove-btn" onclick="
-          dataLayer.push({
-              event: 'update_cart',
-              event_category: 'ecommerce',
-              event_action: 'click_remove_item',
-              event_label: 'remove_item',
-              currency: 'EUR', // Si la moneda es fija, déjala así. Si es dinámica, usa item.currency si existe.
-              product_id: '${item.id}', // Corregido: id debe ser un string
-              product_name: '${item.name}', // Corregido: name debe ser un string
-              product_price: ${item.price}, // Corregido: price es un número, no necesita comillas
-              quantity: ${item.quantity} // Corregido: quantity es un número, no necesita comillas
-          });
-        ">&times;</button>
-    </div>
-`
+          <div class="cart-item" data-id="${item.id}">
+              <img src="${item.image}" alt="${item.name
+          }" class="cart-item__image">
+              <div class="cart-item__details">
+                  <h4 class="cart-item__name">${item.name}</h4>
+                  <p class="cart-item__price">$${item.price.toFixed(2)}</p>
+                  <div class="cart-item__quantity">
+                      <button class="quantity-btn" data-action="decrease">-</button>
+                      <span>${item.quantity}</span>
+                      <button class="quantity-btn" data-action="increase">+</button>
+                  </div>
+              </div>
+              <button class="remove-btn" onclick="
+dataLayer.push({
+    event: 'update_cart',
+    event_category: 'ecommerce',
+    event_action: 'click_remove_item',
+    event_label: 'remove_item',
+    currency: 'EUR', // O la variable JavaScript que contenga la moneda, si es dinámica
+    product_id:${item.id}, // Asegúrate de que esta variable esté definida en tu GTM o sea una variable JS
+    product_name: ${item.name}, // Asegúrate de que esta variable esté definida en tu GTM o sea una variable JS
+    product_price: ${item.price}, // Asegúrate de que esta variable esté definida en tu GTM o sea una variable JS
+    quantity: ${item.quantity} // Asegúrate de que esta variable esté definida en tu GTM o sea una variable JS
+});
+">&times;</button>
+          </div>
+      `
       )
       .join("");
 
