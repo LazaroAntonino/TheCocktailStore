@@ -106,8 +106,7 @@ export class ProductsUI {
                   " >
                 </a>
                 <div class="product__content">
-                    <h3 class="product__title">
-                        <a href="product.html?id=${product.id}"   onclick="
+                    <h3 class="product__title" onclick="
                     dataLayer.push({
                       event: 'product_details_view',
                       event_category: 'ecommerce',
@@ -120,7 +119,8 @@ export class ProductsUI {
                       currency: 'USD',
                       link_url: 'product.html?id=${product.id}'
                     });
-                  " >${product.name
+                  ">
+                        <a href="product.html?id=${product.id}">${product.name
           } id="${product.id}-${product.name}"</a>
                     </h3>
                     <p class="product__description">${product.description}</p>
