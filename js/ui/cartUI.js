@@ -89,10 +89,10 @@ dataLayer.push({
     event_action: 'click_remove_item',
     event_label: 'remove_item',
     currency: 'EUR',
-    product_id:${item.id},
+    product_id:"${item.id}",
     product_name:"${item.name}",
-    product_price: ${item.price},
-    quantity:${item.quantity}
+    product_price: "${item.price}",
+    quantity:"${item.quantity}"
 });
 ">&times;</button>
           </div>
