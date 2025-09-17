@@ -91,7 +91,7 @@ event_label: 'remove_item',
 currency: 'EUR',
 product_id: '${item.id.toString()}',
 product_name: '${item.name.toString()}',
-product_price: '${item.name.toString()}',
+product_price: '${item.price.toString()}',
 quantity: '${item.quantity.toString()}'
 });
 ">&times;</button>
