@@ -81,12 +81,7 @@ export class ProductDetailUI {
     });
 
     this.addToCartBtn.addEventListener("click", () => {
-      console.log(
-        "Añadiendo al carrito:",
-        this.product,
-        "Cantidad:",
-        this.quantity
-      );
+      console.log('inicio push dataLayer')
       // --- INICIO: dataLayer.push para "add_to_cart" ---
       dataLayer.push({
         event: 'add_to_cart',
@@ -100,7 +95,15 @@ export class ProductDetailUI {
         quantity: this.quantity, // Añadimos la cantidad aquí
         currency: 'USD', // Asegúrate de que la moneda sea consistente
       });
+      console.log('fin push dataLayer')
+
       // --- FIN: dataLayer.push para "add_to_cart" ---
+      console.log(
+        "Añadiendo al carrito:",
+        this.product,
+        "Cantidad:",
+        this.quantity
+      );
       cartService.addItem(this.product, this.quantity);
 
 
