@@ -84,15 +84,15 @@ export class CartUI {
               </div>
               <button class="remove-btn" onclick="
 dataLayer.push({
-    event: 'update_cart',
-    event_category: 'ecommerce',
-    event_action: 'click_remove_item',
-    event_label: 'remove_item',
-    currency: 'EUR',
-    product_id:"${item.id}",
-    product_name:"${item.name}",
-    product_price: "${item.price}",
-    quantity:"${item.quantity}"
+event: 'update_cart',
+event_category: 'ecommerce',
+event_action: 'click_remove_item',
+event_label: 'remove_item',
+currency: 'EUR',
+product_id: item.id, // Aquí no necesitas comillas si item.id ya es una cadena o número
+product_name: item.name,
+product_price: item.price,
+quantity: item.quantity
 });
 ">&times;</button>
           </div>
