@@ -87,8 +87,6 @@ export class ProductDetailUI {
         "Cantidad:",
         this.quantity
       );
-      cartService.addItem(this.product, this.quantity);
-
       // --- INICIO: dataLayer.push para "add_to_cart" ---
       dataLayer.push({
         event: 'add_to_cart',
@@ -103,6 +101,8 @@ export class ProductDetailUI {
         currency: 'USD', // Asegúrate de que la moneda sea consistente
       });
       // --- FIN: dataLayer.push para "add_to_cart" ---
+      cartService.addItem(this.product, this.quantity);
+
 
       const originalText = this.addToCartBtn.textContent;
       this.addToCartBtn.textContent = "¡Añadido!";
