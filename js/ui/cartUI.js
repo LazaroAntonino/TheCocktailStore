@@ -89,10 +89,10 @@ event_category: 'ecommerce',
 event_action: 'click_remove_item',
 event_label: 'remove_item',
 currency: 'EUR',
-product_id: item.id, // Aquí no necesitas comillas si item.id ya es una cadena o número
-product_name: item.name,
-product_price: item.price,
-quantity: item.quantity
+product_id: '${item.id.toString()}',
+product_name: '${item.name.toString()}',
+product_price: '${item.name.toString()}',
+quantity: '${item.quantity.toString()}'
 });
 ">&times;</button>
           </div>
