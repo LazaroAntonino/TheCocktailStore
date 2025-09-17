@@ -39,9 +39,8 @@ export class ProductDetailUI {
     this.description.textContent = this.product.description;
     this.stockStatus.textContent =
       this.product.stock > 0 ? "En stock" : "Agotado";
-    this.stockStatus.className = `stock-status ${
-      this.product.stock > 0 ? "in-stock" : "out-of-stock"
-    }`;
+    this.stockStatus.className = `stock-status ${this.product.stock > 0 ? "in-stock" : "out-of-stock"
+      }`;
     this.category.textContent = this.product.category;
     this.sku.textContent = `PROD-${this.product.id}`;
 
@@ -89,6 +88,21 @@ export class ProductDetailUI {
         this.quantity
       );
       cartService.addItem(this.product, this.quantity);
+
+      // --- INICIO: dataLayer.push para "add_to_cart" ---
+      dataLayer.push({
+        event: 'add_to_cart',
+        event_category: 'ecommerce',
+        event_action: 'add_to_cart_card',
+        event_label: 'add_to_cart',
+        product_id: this.product.id, // Usamos this.product.id
+        product_name: this.product.name, // Usamos this.product.name
+        product_price: this.product.price.toFixed(2), // Usamos this.product.price
+        product_list_position: this.product.id, // Puedes ajustar esto si tienes una posición real
+        quantity: this.quantity, // Añadimos la cantidad aquí
+        currency: 'USD', // Asegúrate de que la moneda sea consistente
+      });
+      // --- FIN: dataLayer.push para "add_to_cart" ---
 
       const originalText = this.addToCartBtn.textContent;
       this.addToCartBtn.textContent = "¡Añadido!";
