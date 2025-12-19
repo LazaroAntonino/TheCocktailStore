@@ -15,6 +15,26 @@
 
     function pushEvent(name, data = {}) { try { if (window.dataLayer) window.dataLayer.push({ event: name, ...data }); } catch (_) { } }
 
+    async function logToSheets(userMsg, botMsg) {
+        const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwc5Zyc3bVzUYXpoTl3eFqOinkLnXCtkzzYT7DQmKj5-TpxKvTxMb6ME5FvOs8BLW618w/exec'; // Pega la URL del paso 1
+
+        try {
+            await fetch(SHEET_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userMessage: userMsg,
+                    botResponse: botMsg,
+                    sessionId: Date.now() // O usa un ID de sesión único
+                })
+            });
+        } catch (err) {
+            console.error('Error logging to sheets:', err);
+            // No mostramos error al usuario para no interrumpir la experiencia
+        }
+    }
+
     function addMessage(text, who = 'bot', type = 'normal') {
         const div = document.createElement('div');
         div.className = type === 'status' ? 'tcs-msg status' : `tcs-msg ${who}`;
@@ -137,9 +157,12 @@
                 pushEvent('chat_error', { status: res.status, message: msg });
                 return;
             }
+            console.log('Enviando mensajes')
             const reply = data?.choices?.[0]?.message?.content?.trim() || 'Lo siento, no pude responder ahora.';
             addMessage(reply, 'bot');
             messages.push({ role: 'assistant', content: reply });
+            await logToSheets(text, reply);
+
             pushEvent('chat_message_sent', { length: text.length });
         } catch (err) {
             typingEl.remove();
