@@ -131,7 +131,7 @@
 
      try {
          // 👇 AHORA llamamos a tu servidor, no a OpenAI directo
-         const res = await fetch('https://thecocktailstore.netlify.app/api/chat', {
+         const res = await fetch('http://localhost:3001/api/chat', {
              method: 'POST',
              headers: { 'Content-Type': 'application/json' },
              body: JSON.stringify({
