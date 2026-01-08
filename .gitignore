@@ -1,1 +1,2 @@
-tcs-chat-backend/.env
+.env
+node_modules
