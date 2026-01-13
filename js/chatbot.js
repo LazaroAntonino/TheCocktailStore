@@ -5,21 +5,20 @@
   const widget = $('tcs-chat-widget');
   const backdrop = $('tcs-chat-backdrop');
   const closeBtn = $('tcs-chat-close');
-  const resetKeyBtn = $('tcs-chat-reset-key'); // puedes borrar el botón 🔑 del HTML si ya no lo usas
+  const resetKeyBtn = $('tcs-chat-reset-key');
   const form = $('tcs-chat-form');
   const input = $('tcs-chat-text');
   const messagesEl = $('tcs-chat-messages');
 
   if (!toggle || !widget || !backdrop || !closeBtn || !form || !input || !messagesEl) return;
 
-  // estado del widget + threadId (lo mantiene el backend)
   const state = { sending: false, open: false, threadId: null };
   const messages = [];
 
   function pushEvent(name, data = {}) {
     try {
       if (window.dataLayer) window.dataLayer.push({ event: name, ...data });
-    } catch (_) {}
+    } catch (_) { }
   }
 
   async function logToSheets(userMsg, botMsg) {
@@ -112,7 +111,6 @@
   closeBtn.addEventListener('click', closeChat);
   backdrop.addEventListener('click', closeChat);
 
-  // Si quitas el botón 🔑 del HTML, puedes borrar este bloque:
   if (resetKeyBtn) {
     resetKeyBtn.addEventListener('click', () => {
       addMessage('La API key ya no se configura desde el navegador.', 'bot', 'status');
@@ -136,13 +134,13 @@
     state.sending = true;
 
     try {
-      // Llamamos al backend, no a OpenAI directo
+      // Llamamos al backend
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: text,
-          threadId: state.threadId, // null la primera vez, luego el mismo
+          threadId: state.threadId,
         }),
       });
 
@@ -164,9 +162,26 @@
       await logToSheets(text, reply);
 
       pushEvent('chat_message_sent', { length: text.length });
+
+      // ==========================================================
+      // <--- NUEVO: INTEGRACIÓN DEL AGENTE B (ANALISTA)
+      // ==========================================================
+      // Verificamos si el backend nos envió el objeto 'analytics'
+      if (data.analytics) {
+        console.group("🤖 Agente Analista (GA4)");
+        console.log("Evento detectado:", data.analytics.event);
+        console.log("Payload completo:", data.analytics);
+        console.groupEnd();
+
+        // AQUÍ ES DONDE HARÍAS EL PUSH REAL CUANDO ESTÉS LISTO:
+        // window.dataLayer.push(data.analytics);
+      }
+      // ==========================================================
+
     } catch (err) {
       typingEl.remove();
       addMessage('Error al conectar con el servidor. Intenta de nuevo.', 'bot');
+      console.error(err); // Agregué console log para debug
       pushEvent('chat_error', { message: String(err) });
     } finally {
       state.sending = false;
