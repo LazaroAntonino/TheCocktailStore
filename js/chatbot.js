@@ -161,20 +161,13 @@
       messages.push({ role: 'assistant', content: reply });
       await logToSheets(text, reply);
 
-      pushEvent('chat_message_sent', { length: text.length });
-
       // ==========================================================
       // <--- NUEVO: INTEGRACIÓN DEL AGENTE B (ANALISTA)
       // ==========================================================
       // Verificamos si el backend nos envió el objeto 'analytics'
       if (data.analytics) {
-        console.group("🤖 Agente Analista (GA4)");
-        console.log("Evento detectado:", data.analytics.event);
-        console.log("Payload completo:", data.analytics);
-        console.groupEnd();
-
         // AQUÍ ES DONDE HARÍAS EL PUSH REAL CUANDO ESTÉS LISTO:
-        // window.dataLayer.push(data.analytics);
+        window.dataLayer.push(data.analytics);
       }
       // ==========================================================
 
