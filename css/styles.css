@@ -1439,3 +1439,11 @@ button {
         opacity: 1
     }
 }
+
+/* Añado estas líneas para intentar forzar el cerrado */
+#tcs-chat-widget:not(.open) { 
+  display: none; 
+}
+#tcs-chat-backdrop:not(.show) { 
+  display: none; 
+}
