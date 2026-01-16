@@ -162,11 +162,18 @@
       await logToSheets(text, reply);
 
       // ==========================================================
-      // <--- NUEVO: INTEGRACIÓN DEL AGENTE B (ANALISTA)
+      // AGENTE 1: INTERACCIÓN (SIEMPRE se envía)
       // ==========================================================
-      // Verificamos si el backend nos envió el objeto 'analytics'
-      if (data.analytics) {
-        // AQUÍ ES DONDE HARÍAS EL PUSH REAL CUANDO ESTÉS LISTO:
+      if (data.interaction) {
+        console.log('📊 Push Interacción:', data.interaction);
+        window.dataLayer.push(data.interaction);
+      }
+
+      // ==========================================================
+      // AGENTE 2: FUNNEL (Solo si hay evento de ecommerce)
+      // ==========================================================
+      if (data.analytics && data.analytics.event) {
+        console.log('📈 Push Funnel:', data.analytics);
         window.dataLayer.push(data.analytics);
       }
       // ==========================================================

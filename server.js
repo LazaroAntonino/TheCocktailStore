@@ -9,12 +9,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// 1. CARGAMOS LOS DOS IDs
+// 1. CARGAMOS LOS TRES IDs
 const ASSISTANT_ID = process.env.ASSISTANT_ID; // El Chatbot
-const ASSISTANT_ANALYTICS_ID = process.env.ASSISTANT_ANALYTICS_ID; // El Analista
+const ASSISTANT_INTERACTION_ID = process.env.ASSISTANT_INTERACTION_ID; // Agente de Interacción (SIEMPRE)
+const ASSISTANT_ANALYTICS_ID = process.env.ASSISTANT_ANALYTICS_ID; // Agente de Funnel (CONDICIONAL)
 
 console.log('Bot ID:', ASSISTANT_ID);
-console.log('Analista ID:', ASSISTANT_ANALYTICS_ID);
+console.log('Interacción ID:', ASSISTANT_INTERACTION_ID);
+console.log('Analista Funnel ID:', ASSISTANT_ANALYTICS_ID);
 
 app.post('/api/chat', async (req, res) => {
   try {
@@ -63,68 +65,107 @@ app.post('/api/chat', async (req, res) => {
 
 
     // =================================================================================
-    // FASE 2: EL ANALISTA (Experto GA4)
+    // FASE 2: AGENTE DE INTERACCIÓN (SIEMPRE se ejecuta)
+    // =================================================================================
+    let interactionData = null;
+
+    try {
+      console.log('� Ejecutando Agente de Interacción...');
+
+      const interactionThread = await openai.beta.threads.create();
+
+      const contextoInteraccion = `
+        ANALIZA ESTA INTERACCIÓN:
+        - Usuario dijo: "${message}"
+        - Chatbot respondió: "${botReply}"
+        
+        Genera el objeto JSON de chatbot_interaction según tus instrucciones.
+      `;
+
+      await openai.beta.threads.messages.create(interactionThread.id, {
+        role: 'user',
+        content: contextoInteraccion,
+      });
+
+      const runInteraction = await openai.beta.threads.runs.createAndPoll(interactionThread.id, {
+        assistant_id: ASSISTANT_INTERACTION_ID,
+      });
+
+      if (runInteraction.status === 'completed') {
+        const iMessages = await openai.beta.threads.messages.list(interactionThread.id);
+        const iMsg = iMessages.data[0];
+
+        if (iMsg && iMsg.content[0].type === 'text') {
+          let jsonRaw = iMsg.content[0].text.value;
+          jsonRaw = jsonRaw.replace(/```json/g, '').replace(/```/g, '').trim();
+          interactionData = JSON.parse(jsonRaw);
+          console.log('✅ Interacción:', JSON.stringify(interactionData, null, 2));
+        }
+      }
+    } catch (err) {
+      console.error('⚠️ Error en agente de interacción:', err.message);
+      interactionData = null;
+    }
+
+    // =================================================================================
+    // FASE 3: AGENTE DE FUNNEL (Solo si detecta evento de ecommerce)
     // =================================================================================
     let analyticsData = null;
 
     try {
-      console.log('🕵️ Ejecutando Analista (Assistant Dedicado)...');
+      console.log('🕵️ Ejecutando Agente de Funnel...');
 
-      // A. Creamos un hilo TEMPORAL (usar y tirar)
       const analyticsThread = await openai.beta.threads.create();
 
-      // B. Contexto para el analista
-      const contexto = `
-        ANALISIS DE INTERACCIÓN:
+      const contextoFunnel = `
+        ANALIZA ESTA INTERACCIÓN PARA DETECTAR EVENTOS DE FUNNEL:
         - Usuario dijo: "${message}"
         - Chatbot respondió: "${botReply}"
         
-        Recuerda tus instrucciones: Eres el Arquitecto de Datos.
-        Genera el objeto JSON para DataLayer basándote en esta interacción.
+        Si detectas un evento de funnel (view_item, view_item_list, add_to_cart, view_search_results), devuelve el JSON.
+        Si NO hay evento de funnel, devuelve: {"event": null}
       `;
 
       await openai.beta.threads.messages.create(analyticsThread.id, {
         role: 'user',
-        content: contexto,
+        content: contextoFunnel,
       });
 
-      // C. Ejecutamos el Assistant 2 (Analista)
       const runAnalytics = await openai.beta.threads.runs.createAndPoll(analyticsThread.id, {
-        assistant_id: ASSISTANT_ANALYTICS_ID, // <--- Tu segundo ID del .env
+        assistant_id: ASSISTANT_ANALYTICS_ID,
       });
 
       if (runAnalytics.status === 'completed') {
         const aMessages = await openai.beta.threads.messages.list(analyticsThread.id);
-        const aMsg = aMessages.data[0]; // El último mensaje es la respuesta
+        const aMsg = aMessages.data[0];
 
         if (aMsg && aMsg.content[0].type === 'text') {
           let jsonRaw = aMsg.content[0].text.value;
-
-          // --- LIMPIEZA DE SEGURIDAD ---
-          // A veces GPT devuelve '''json { ... } ''', esto lo limpia:
           jsonRaw = jsonRaw.replace(/```json/g, '').replace(/```/g, '').trim();
-
-          analyticsData = JSON.parse(jsonRaw);
-          console.log('📊 JSON Generado:', JSON.stringify(analyticsData, null, 2));
+          const parsed = JSON.parse(jsonRaw);
+          
+          // Solo guardamos si hay un evento real (no null)
+          if (parsed.event && parsed.event !== null) {
+            analyticsData = parsed;
+            console.log('📈 Funnel detectado:', JSON.stringify(analyticsData, null, 2));
+          } else {
+            console.log('ℹ️ No se detectó evento de funnel');
+          }
         }
       }
-
-      // D. IMPORTANTE: Borrar el hilo temporal para no ensuciar tu cuenta de OpenAI
-      // await openai.beta.threads.del(analyticsThread.id);
-
     } catch (err) {
-      console.error('⚠️ Error en el proceso de analítica:', err.message);
-      // Fallamos silenciosamente en analítica para no romper el chat del usuario
+      console.error('⚠️ Error en agente de funnel:', err.message);
       analyticsData = null;
     }
 
     // =================================================================================
-    // FASE 3: RESPUESTA FINAL
+    // FASE 4: RESPUESTA FINAL
     // =================================================================================
     return res.json({
       reply: botReply,
       threadId: mainThreadId,
-      analytics: analyticsData,
+      interaction: interactionData,  // SIEMPRE se envía
+      analytics: analyticsData,       // Solo si hay evento de funnel
     });
 
   } catch (err) {
