@@ -150,12 +150,22 @@ app.post('/api/chat', async (req, res) => {
 
       const analyticsThread = await openai.beta.threads.create();
 
+      // Preparamos el contexto completo incluyendo itemDetails
+      const itemDetailsJson = itemDetails ? JSON.stringify(itemDetails) : 'null';
+
       const contextoFunnel = `
         ANALIZA ESTA INTERACCIÓN PARA DETECTAR EVENTOS DE FUNNEL:
+        
         - Usuario dijo: "${message}"
         - Chatbot respondió: "${botReply}"
+        - Productos mostrados (itemDetails): ${itemDetailsJson}
         
-        Si detectas un evento de funnel (view_item, view_item_list, add_to_cart, view_search_results), devuelve el JSON.
+        IMPORTANTE: Usa los datos de "itemDetails" para construir el array "items" del evento.
+        - Si itemDetails es un objeto, es UN producto.
+        - Si itemDetails es un array, son VARIOS productos.
+        - Si itemDetails es null, no se mostró ningún producto.
+        
+        Si detectas un evento de funnel (view_item, view_item_list, add_to_cart, view_search_results), devuelve el JSON con los items correctos.
         Si NO hay evento de funnel, devuelve: {"event": null}
       `;
 

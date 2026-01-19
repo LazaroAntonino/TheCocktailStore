@@ -173,8 +173,6 @@
     messages.push({ role: 'user', content: text });
     addMessage(text, 'user');
 
-    pushEvent('chat_message_sent', { conversation_id: state.conversationId });
-
     const typingEl = showTyping();
     state.sending = true;
 
@@ -205,84 +203,97 @@
       addMessage(reply, 'bot');
       messages.push({ role: 'assistant', content: reply });
 
-      pushEvent('chat_message_received', { conversation_id: state.conversationId });
-
       await logToSheets(text, reply);
 
       // ==========================================================
-      // TARJETA DE PRODUCTO (Si el bot muestra un producto)
+      // TARJETA DE PRODUCTO (Si el bot muestra un producto o varios)
       // ==========================================================
       if (data.itemDetails) {
-        const item = data.itemDetails;
-        console.log('🛒 Producto mostrado:', item);
+        // Normalizar: si es un solo objeto, lo convertimos a array
+        const items = Array.isArray(data.itemDetails) ? data.itemDetails : [data.itemDetails];
+        
+        console.log('🛒 Productos mostrados:', items.length);
 
-        const card = document.createElement('div');
-        card.className = 'tcs-product-card';
-
-        card.innerHTML = `
-          <img class="tcs-product-image" src="${item.image}" alt="${item.name}">
-          <div class="tcs-product-info">
-            <div class="tcs-product-name">${item.name}</div>
-            <div class="tcs-product-price">${item.price.toFixed(2)}€</div>
-            <div class="tcs-product-desc">${item.description}</div>
-            <div class="tcs-product-actions">
-              <a href="product.html?id=${item.id}" class="tcs-product-link">Ver detalles</a>
-              <button class="tcs-product-add-cart" data-product='${JSON.stringify(item).replace(/'/g, "&#39;")}'>
-                <i class="fas fa-cart-plus"></i> Añadir
-              </button>
-            </div>
-          </div>
-        `;
-
-        // Event listener para el botón de añadir al carrito
-        const addCartBtn = card.querySelector('.tcs-product-add-cart');
-        addCartBtn.addEventListener('click', () => {
-          if (window.cartService) {
-            window.cartService.addItem(item);
-            
-            // Feedback visual
-            addCartBtn.innerHTML = '<i class="fas fa-check"></i> ¡Añadido!';
-            addCartBtn.disabled = true;
-            addCartBtn.classList.add('added');
-            
-            setTimeout(() => {
-              addCartBtn.innerHTML = '<i class="fas fa-cart-plus"></i> Añadir';
-              addCartBtn.disabled = false;
-              addCartBtn.classList.remove('added');
-            }, 2000);
-
-            // Evento de analítica
-            window.dataLayer.push({
-              event: 'add_to_cart',
-              event_category: 'ecommerce',
-              event_action: 'add_to_cart_chatbot',
-              event_label: item.name,
-              currency: 'EUR',
-              value: item.price,
-              items: [{
-                item_id: item.id,
-                item_name: item.name,
-                price: item.price,
-                item_category: item.category,
-                quantity: 1
-              }]
-            });
-          } else {
-            console.error('CartService no disponible');
+        items.forEach((item) => {
+          // Validar que el item tenga las propiedades necesarias
+          if (!item || !item.id || !item.name) {
+            console.warn('⚠️ Producto inválido:', item);
+            return;
           }
+
+          const card = document.createElement('div');
+          card.className = 'tcs-product-card';
+
+          const price = typeof item.price === 'number' ? item.price.toFixed(2) : item.price;
+          const description = item.description || '';
+          const image = item.image || 'images/placeholder.png';
+
+          card.innerHTML = `
+            <img class="tcs-product-image" src="${image}" alt="${item.name}">
+            <div class="tcs-product-info">
+              <div class="tcs-product-name">${item.name}</div>
+              <div class="tcs-product-price">${price}€</div>
+              <div class="tcs-product-desc">${description}</div>
+              <div class="tcs-product-actions">
+                <a href="product.html?id=${item.id}" class="tcs-product-link">Ver detalles</a>
+                <button class="tcs-product-add-cart" data-product='${JSON.stringify(item).replace(/'/g, "&#39;")}'>
+                  <i class="fas fa-cart-plus"></i> Añadir
+                </button>
+              </div>
+            </div>
+          `;
+
+          // Event listener para el botón de añadir al carrito
+          const addCartBtn = card.querySelector('.tcs-product-add-cart');
+          addCartBtn.addEventListener('click', () => {
+            if (window.cartService) {
+              window.cartService.addItem(item);
+              
+              // Feedback visual
+              addCartBtn.innerHTML = '<i class="fas fa-check"></i> ¡Añadido!';
+              addCartBtn.disabled = true;
+              addCartBtn.classList.add('added');
+              
+              setTimeout(() => {
+                addCartBtn.innerHTML = '<i class="fas fa-cart-plus"></i> Añadir';
+                addCartBtn.disabled = false;
+                addCartBtn.classList.remove('added');
+              }, 2000);
+
+              // Evento de analítica
+              window.dataLayer.push({
+                event: 'add_to_cart',
+                event_category: 'ecommerce',
+                event_action: 'add_to_cart_chatbot',
+                event_label: item.name,
+                currency: 'EUR',
+                value: typeof item.price === 'number' ? item.price : parseFloat(item.price),
+                items: [{
+                  item_id: item.id,
+                  item_name: item.name,
+                  price: item.price,
+                  item_category: item.category,
+                  quantity: 1
+                }]
+              });
+            } else {
+              console.error('CartService no disponible');
+            }
+          });
+
+          messagesEl.appendChild(card);
+
+          // Evento de analítica para producto mostrado en chat
+          window.dataLayer.push({
+            event: 'chat_product_shown',
+            item_id: item.id,
+            item_name: item.name,
+            item_price: item.price,
+            item_category: item.category,
+          });
         });
 
-        messagesEl.appendChild(card);
         messagesEl.scrollTop = messagesEl.scrollHeight;
-
-        // Evento de analítica para producto mostrado en chat
-        window.dataLayer.push({
-          event: 'chat_product_shown',
-          item_id: item.id,
-          item_name: item.name,
-          item_price: item.price,
-          item_category: item.category,
-        });
       }
 
       // ==========================================================
