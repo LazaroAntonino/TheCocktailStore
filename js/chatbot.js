@@ -1,4 +1,3 @@
-// js/chatbot.js
 (() => {
   const $ = (id) => document.getElementById(id);
   const toggle = $('tcs-chat-toggle');
@@ -12,8 +11,32 @@
 
   if (!toggle || !widget || !backdrop || !closeBtn || !form || !input || !messagesEl) return;
 
-  const state = { sending: false, open: false, threadId: null };
+  const state = { sending: false, open: false, threadId: null, conversationId: null };
   const messages = [];
+
+  const CID_KEY = 'tcs_conversation_id';
+
+  function newConversationId() {
+    if (window.crypto?.randomUUID) return crypto.randomUUID();
+    return `cid_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+  }
+
+  function getOrCreateConversationId() {
+    let cid = sessionStorage.getItem(CID_KEY);
+    if (!cid) {
+      cid = newConversationId();
+      sessionStorage.setItem(CID_KEY, cid);
+    }
+    return cid;
+  }
+
+  function resetConversationId() {
+    const cid = newConversationId();
+    sessionStorage.setItem(CID_KEY, cid);
+    return cid;
+  }
+
+  state.conversationId = getOrCreateConversationId();
 
   function pushEvent(name, data = {}) {
     try {
@@ -34,6 +57,7 @@
           userMessage: userMsg,
           botResponse: botMsg,
           sessionId: Date.now(),
+          conversation_id: state.conversationId,
         }),
       });
     } catch (err) {
@@ -65,16 +89,22 @@
 
   function openChat() {
     if (state.open) return;
+
+    if (!state.conversationId) state.conversationId = getOrCreateConversationId();
+
     backdrop.classList.remove('tcs-hidden');
     widget.classList.remove('tcs-hidden');
     requestAnimationFrame(() => {
       backdrop.classList.add('show');
       widget.classList.add('open');
     });
+
     widget.setAttribute('aria-hidden', 'false');
     toggle.setAttribute('aria-expanded', 'true');
     state.open = true;
-    pushEvent('chat_opened');
+
+    pushEvent('chat_opened', { conversation_id: state.conversationId });
+
     if (messages.length === 0) {
       addMessage('¡Hola! Soy el asistente de The Cocktail Store. ¿En qué puedo ayudarte hoy?', 'bot');
     }
@@ -97,7 +127,7 @@
     widget.setAttribute('aria-hidden', 'true');
     toggle.setAttribute('aria-expanded', 'false');
     state.open = false;
-    pushEvent('chat_closed');
+    pushEvent('chat_closed', { conversation_id: state.conversationId });
     document.removeEventListener('keydown', onEsc);
   }
 
@@ -113,13 +143,23 @@
 
   if (resetKeyBtn) {
     resetKeyBtn.addEventListener('click', () => {
-      addMessage('La API key ya no se configura desde el navegador.', 'bot', 'status');
+      state.conversationId = resetConversationId();
+
+      state.threadId = null;
+
+      messages.length = 0;
+      messagesEl.innerHTML = '';
+
+      addMessage('Nueva conversación iniciada. ¿En qué puedo ayudarte?', 'bot');
+      pushEvent('chat_new_conversation', { conversation_id: state.conversationId });
+      setTimeout(() => input.focus(), 50);
     });
   }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (state.sending) return;
+
     const text = input.value.trim();
     if (!text) return;
 
@@ -128,19 +168,24 @@
     if (submitBtn) submitBtn.disabled = true;
     input.disabled = true;
 
+    if (!state.conversationId) state.conversationId = getOrCreateConversationId();
+
     messages.push({ role: 'user', content: text });
     addMessage(text, 'user');
+
+    pushEvent('chat_message_sent', { conversation_id: state.conversationId });
+
     const typingEl = showTyping();
     state.sending = true;
 
     try {
-      // Llamamos al backend
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: text,
           threadId: state.threadId,
+          conversation_id: state.conversationId,
         }),
       });
 
@@ -150,7 +195,7 @@
       if (!res.ok || data.error) {
         const msg = data.error || `Error ${res.status}`;
         addMessage(`Error: ${msg}`, 'bot');
-        pushEvent('chat_error', { status: res.status, message: msg });
+        pushEvent('chat_error', { status: res.status, message: msg, conversation_id: state.conversationId });
         return;
       }
 
@@ -159,6 +204,9 @@
 
       addMessage(reply, 'bot');
       messages.push({ role: 'assistant', content: reply });
+
+      pushEvent('chat_message_received', { conversation_id: state.conversationId });
+
       await logToSheets(text, reply);
 
       // ==========================================================
@@ -242,7 +290,7 @@
       // ==========================================================
       if (data.interaction) {
         console.log('📊 Push Interacción:', data.interaction);
-        window.dataLayer.push(data.interaction);
+        window.dataLayer.push({ ...data.interaction, conversation_id: state.conversationId });
       }
 
       // ==========================================================
@@ -250,15 +298,15 @@
       // ==========================================================
       if (data.analytics && data.analytics.event) {
         console.log('📈 Push Funnel:', data.analytics);
-        window.dataLayer.push(data.analytics);
+        window.dataLayer.push({ ...data.analytics, conversation_id: state.conversationId });
       }
       // ==========================================================
 
     } catch (err) {
       typingEl.remove();
       addMessage('Error al conectar con el servidor. Intenta de nuevo.', 'bot');
-      console.error(err); // Agregué console log para debug
-      pushEvent('chat_error', { message: String(err) });
+      console.error(err);
+      pushEvent('chat_error', { message: String(err), conversation_id: state.conversationId });
     } finally {
       state.sending = false;
       input.disabled = false;
