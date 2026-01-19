@@ -162,6 +162,82 @@
       await logToSheets(text, reply);
 
       // ==========================================================
+      // TARJETA DE PRODUCTO (Si el bot muestra un producto)
+      // ==========================================================
+      if (data.itemDetails) {
+        const item = data.itemDetails;
+        console.log('🛒 Producto mostrado:', item);
+
+        const card = document.createElement('div');
+        card.className = 'tcs-product-card';
+
+        card.innerHTML = `
+          <img class="tcs-product-image" src="${item.image}" alt="${item.name}">
+          <div class="tcs-product-info">
+            <div class="tcs-product-name">${item.name}</div>
+            <div class="tcs-product-price">${item.price.toFixed(2)}€</div>
+            <div class="tcs-product-desc">${item.description}</div>
+            <div class="tcs-product-actions">
+              <a href="product.html?id=${item.id}" class="tcs-product-link">Ver detalles</a>
+              <button class="tcs-product-add-cart" data-product='${JSON.stringify(item).replace(/'/g, "&#39;")}'>
+                <i class="fas fa-cart-plus"></i> Añadir
+              </button>
+            </div>
+          </div>
+        `;
+
+        // Event listener para el botón de añadir al carrito
+        const addCartBtn = card.querySelector('.tcs-product-add-cart');
+        addCartBtn.addEventListener('click', () => {
+          if (window.cartService) {
+            window.cartService.addItem(item);
+            
+            // Feedback visual
+            addCartBtn.innerHTML = '<i class="fas fa-check"></i> ¡Añadido!';
+            addCartBtn.disabled = true;
+            addCartBtn.classList.add('added');
+            
+            setTimeout(() => {
+              addCartBtn.innerHTML = '<i class="fas fa-cart-plus"></i> Añadir';
+              addCartBtn.disabled = false;
+              addCartBtn.classList.remove('added');
+            }, 2000);
+
+            // Evento de analítica
+            window.dataLayer.push({
+              event: 'add_to_cart',
+              event_category: 'ecommerce',
+              event_action: 'add_to_cart_chatbot',
+              event_label: item.name,
+              currency: 'EUR',
+              value: item.price,
+              items: [{
+                item_id: item.id,
+                item_name: item.name,
+                price: item.price,
+                item_category: item.category,
+                quantity: 1
+              }]
+            });
+          } else {
+            console.error('CartService no disponible');
+          }
+        });
+
+        messagesEl.appendChild(card);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+
+        // Evento de analítica para producto mostrado en chat
+        window.dataLayer.push({
+          event: 'chat_product_shown',
+          item_id: item.id,
+          item_name: item.name,
+          item_price: item.price,
+          item_category: item.category,
+        });
+      }
+
+      // ==========================================================
       // AGENTE 1: INTERACCIÓN (SIEMPRE se envía)
       // ==========================================================
       if (data.interaction) {

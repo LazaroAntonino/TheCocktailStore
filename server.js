@@ -51,17 +51,50 @@ app.post('/api/chat', async (req, res) => {
       throw new Error(`El chatbot falló con estado: ${runBot.status}`);
     }
 
-    // 4. Recuperar respuesta del Vendedor
-    const messages = await openai.beta.threads.messages.list(mainThreadId);
-    // data[0] suele ser el último mensaje, pero filtramos por si acaso
-    const botMsgObj = messages.data.find((m) => m.role === 'assistant');
+    // 4. Recuperar respuesta del Vendedor (el mensaje más reciente del assistant)
+    const messagesBot = await openai.beta.threads.messages.list(mainThreadId, {
+      order: 'desc',
+      limit: 10
+    });
+    // data[0] es el mensaje más reciente, buscamos el primer assistant
+    const botMsgObj = messagesBot.data.find((m) => m.role === 'assistant');
 
     let botReply = "Lo siento, hubo un error de comunicación.";
+    let itemDetails = null;
+
     if (botMsgObj && botMsgObj.content[0].type === 'text') {
-      botReply = botMsgObj.content[0].text.value;
+      const rawContent = botMsgObj.content[0].text.value;
+      
+      console.log('📝 Respuesta raw del bot:', rawContent.substring(0, 200) + '...');
+      
+      // Intentamos parsear como JSON (nuevo formato)
+      try {
+        // Limpiamos posibles marcadores de código
+        let cleanJson = rawContent.replace(/```json/g, '').replace(/```/g, '').trim();
+        const parsed = JSON.parse(cleanJson);
+        
+        botReply = parsed.response || rawContent;
+        itemDetails = parsed.itemDetails || null;
+        
+        console.log('✅ Respuesta parseada como JSON');
+        if (itemDetails) {
+          console.log('🛒 Producto detectado:', itemDetails.name);
+        }
+      } catch (e) {
+        // Si no es JSON válido, usamos el texto tal cual (fallback)
+        console.log('⚠️ Respuesta no es JSON, usando texto plano');
+        botReply = rawContent;
+        itemDetails = null;
+      }
+      
+      // Limpiar markdown de imágenes que no queremos mostrar en el chat
+      // Elimina patrones como ![Imagen](images/...) o ![texto](url)
+      botReply = botReply.replace(/!\[.*?\]\(.*?\)/g, '').trim();
+      // Eliminar líneas vacías extra que puedan quedar
+      botReply = botReply.replace(/\n{3,}/g, '\n\n');
     }
 
-    console.log(`💬 Respuesta: "${botReply}"`);
+    console.log(`💬 Respuesta: "${botReply.substring(0, 100)}..."`);
 
 
     // =================================================================================
@@ -163,9 +196,10 @@ app.post('/api/chat', async (req, res) => {
     // =================================================================================
     return res.json({
       reply: botReply,
+      itemDetails: itemDetails,        // Datos del producto (si aplica)
       threadId: mainThreadId,
-      interaction: interactionData,  // SIEMPRE se envía
-      analytics: analyticsData,       // Solo si hay evento de funnel
+      interaction: interactionData,    // SIEMPRE se envía
+      analytics: analyticsData,        // Solo si hay evento de funnel
     });
 
   } catch (err) {

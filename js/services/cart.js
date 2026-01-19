@@ -76,3 +76,6 @@ export class CartService {
 }
 
 export const cartService = new CartService();
+
+// Exponer globalmente para que chatbot.js pueda usarlo
+window.cartService = cartService;
