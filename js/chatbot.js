@@ -266,6 +266,7 @@
                 event_category: 'ecommerce',
                 event_action: 'add_to_cart_chatbot',
                 event_label: item.name,
+                conversation_id: state.conversationId,
                 currency: 'EUR',
                 value: typeof item.price === 'number' ? item.price : parseFloat(item.price),
                 items: [{
@@ -286,6 +287,7 @@
           // Evento de analítica para producto mostrado en chat
           window.dataLayer.push({
             event: 'chat_product_shown',
+            conversation_id: state.conversationId,
             item_id: item.id,
             item_name: item.name,
             item_price: item.price,
