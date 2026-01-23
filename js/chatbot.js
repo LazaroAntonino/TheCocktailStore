@@ -65,6 +65,50 @@
     }
   }
 
+  // ==========================================================
+  // POLLING PARA ANALYTICS (se ejecuta en background)
+  // ==========================================================
+  async function pollForAnalytics(messageId, maxAttempts = 30, intervalMs = 500) {
+    let attempts = 0;
+    
+    const poll = async () => {
+      if (attempts >= maxAttempts) return;
+      
+      attempts++;
+      
+      try {
+        const res = await fetch(`/api/chat/analytics/${messageId}`);
+        
+        if (!res.ok) {
+          if (attempts < maxAttempts) setTimeout(poll, intervalMs);
+          return;
+        }
+        
+        const data = await res.json();
+        
+        if (!data.ready) {
+          setTimeout(poll, intervalMs);
+          return;
+        }
+        
+        // AGENTE 1: INTERACCIÓN
+        if (data.interaction && window.dataLayer) {
+          window.dataLayer.push({ ...data.interaction, conversation_id: state.conversationId });
+        }
+
+        // AGENTE 2: FUNNEL
+        if (data.analytics && data.analytics.event && window.dataLayer) {
+          window.dataLayer.push({ ...data.analytics, conversation_id: state.conversationId });
+        }
+        
+      } catch (err) {
+        if (attempts < maxAttempts) setTimeout(poll, intervalMs);
+      }
+    };
+    
+    setTimeout(poll, 800);
+  }
+
   function addMessage(text, who = 'bot', type = 'normal') {
     const div = document.createElement('div');
     div.className = type === 'status' ? 'tcs-msg status' : `tcs-msg ${who}`;
@@ -203,7 +247,15 @@
       addMessage(reply, 'bot');
       messages.push({ role: 'assistant', content: reply });
 
-      await logToSheets(text, reply);
+      // Log to sheets (no bloqueante)
+      logToSheets(text, reply);
+
+      // ==========================================================
+      // 🚀 POLLING PARA ANALYTICS (en background, no bloquea UI)
+      // ==========================================================
+      if (data.messageId) {
+        pollForAnalytics(data.messageId);
+      }
 
       // ==========================================================
       // TARJETA DE PRODUCTO (Si el bot muestra un producto o varios)
@@ -212,8 +264,6 @@
         // Normalizar: si es un solo objeto, lo convertimos a array
         const items = Array.isArray(data.itemDetails) ? data.itemDetails : [data.itemDetails];
         
-        console.log('🛒 Productos mostrados:', items.length);
-
         items.forEach((item) => {
           // Validar que el item tenga las propiedades necesarias
           if (!item || !item.id || !item.name) {
@@ -298,22 +348,7 @@
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }
 
-      // ==========================================================
-      // AGENTE 1: INTERACCIÓN (SIEMPRE se envía)
-      // ==========================================================
-      if (data.interaction) {
-        console.log('📊 Push Interacción:', data.interaction);
-        window.dataLayer.push({ ...data.interaction, conversation_id: state.conversationId });
-      }
-
-      // ==========================================================
-      // AGENTE 2: FUNNEL (Solo si hay evento de ecommerce)
-      // ==========================================================
-      if (data.analytics && data.analytics.event) {
-        console.log('📈 Push Funnel:', data.analytics);
-        window.dataLayer.push({ ...data.analytics, conversation_id: state.conversationId });
-      }
-      // ==========================================================
+      // Analytics ahora se obtienen por polling (ver pollForAnalytics arriba)
 
     } catch (err) {
       typingEl.remove();
