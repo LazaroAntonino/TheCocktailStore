@@ -23,7 +23,6 @@ export class ConfirmationUI {
 
   renderConfirmation() {
     const orderInfo = checkoutService.getOrderDetails();
-    console.log("Order info in confirmation:", orderInfo);
 
     this.orderDetails.innerHTML = `
         <p><strong>Fecha:</strong> ${new Date().toLocaleDateString()}</p>

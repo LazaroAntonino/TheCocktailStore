@@ -52,7 +52,6 @@ export class PaymentUI {
 
   renderOrderSummary() {
     const cart = cartService.getItems();
-    console.log("Cart items in payment:", cart);
 
     this.orderItems.innerHTML = cart
       .map(
@@ -107,7 +106,6 @@ export class PaymentUI {
       checkoutService
         .placeOrder()
         .then((orderDetails) => {
-          console.log("Order details before redirect:", orderDetails);
           window.location.href = `/confirmation.html?order=${orderDetails.orderNumber}`;
         })
         .catch((error) => {

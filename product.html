@@ -77,8 +77,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <main class="main">
     <div class="breadcrumbs container">
-      <a href="/">Inicio</a> >
-      <a href="#" class="category-link">Categoría</a> >
+      <a href="/"><i class="fas fa-home"></i> Inicio</a>
+      <i class="fas fa-chevron-right" style="font-size: 0.7rem; color: var(--text-color-light);"></i>
+      <a href="#" class="category-link">Categoría</a>
+      <i class="fas fa-chevron-right" style="font-size: 0.7rem; color: var(--text-color-light);"></i>
       <span class="product-name">Nombre del Producto</span>
     </div>
 
@@ -98,7 +100,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star-half-alt"></i>
-          <span>(4.5)</span>
+          <span>(4.5) - 128 reseñas</span>
         </div>
         <p class="product-price"></p>
         <div class="product-description"></div>
@@ -110,20 +112,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <button class="quantity-btn plus">+</button>
           </div>
           <button class="button button--primary add-to-cart">
-            Añadir al Carrito
+            <i class="fas fa-cart-plus"></i> Añadir al Carrito
           </button>
-          <!-- <button class="button button--secondary add-to-wishlist">
-              <i class="far fa-heart"></i>
-            </button> -->
         </div>
 
         <div class="product-meta">
           <p>
-            <strong>Disponibilidad:</strong>
+            <strong><i class="fas fa-box"></i> Disponibilidad:</strong>
             <span class="stock-status"></span>
           </p>
-          <p><strong>SKU:</strong> <span class="sku"></span></p>
-          <p><strong>Categoría:</strong> <span class="category"></span></p>
+          <p><strong><i class="fas fa-barcode"></i> SKU:</strong> <span class="sku"></span></p>
+          <p><strong><i class="fas fa-tag"></i> Categoría:</strong> <span class="category"></span></p>
         </div>
       </div>
     </section>
@@ -147,8 +146,67 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-  <footer class="footer"></footer>
+  <footer class="footer">
+    <div class="footer__container container">
+      <div class="footer__content">
+        <div class="footer__section">
+          <h3 class="footer__title">The Cocktail Store</h3>
+          <p class="footer__description">
+            Tu tienda de confianza para productos tecnológicos de alta calidad.
+          </p>
+        </div>
 
+        <div class="footer__section">
+          <h3 class="footer__title">Contacto</h3>
+          <ul class="footer__contact">
+            <li><i class="fas fa-phone"></i> +34 123 456 789</li>
+            <li><i class="fas fa-envelope"></i> info@TheCocktailStore.com</li>
+            <li><i class="fas fa-map-marker-alt"></i> Madrid, España</li>
+          </ul>
+        </div>
+
+        <div class="footer__section">
+          <h3 class="footer__title">Redes Sociales</h3>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="footer__social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer__social-link"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>&copy; 2024 TheCocktailStore. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chatbot widget -->
+  <button id="tcs-chat-toggle" class="tcs-chat-toggle" aria-label="Abrir chat" aria-expanded="false">
+    <i class="fas fa-comment"></i>
+  </button>
+
+  <div id="tcs-chat-backdrop" class="tcs-chat-backdrop tcs-hidden" aria-hidden="true"></div>
+
+  <div id="tcs-chat-widget" class="tcs-chat-widget tcs-hidden" role="dialog" aria-modal="true"
+    aria-labelledby="tcs-chat-title" aria-hidden="true">
+    <div class="tcs-chat-header">
+      <span id="tcs-chat-title">Asistente</span>
+      <div class="tcs-chat-actions">
+        <button id="tcs-chat-reset-key" class="tcs-chat-reset-key" aria-label="Nueva conversación" title="Nueva conversación">↻</button>
+        <button id="tcs-chat-close" class="tcs-chat-close" aria-label="Cerrar chat">×</button>
+      </div>
+    </div>
+
+    <div id="tcs-chat-messages" class="tcs-chat-messages"></div>
+
+    <form id="tcs-chat-form" class="tcs-chat-input">
+      <input id="tcs-chat-text" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" required />
+      <button type="submit" class="tcs-chat-send" aria-label="Enviar"><i class="fas fa-paper-plane"></i></button>
+    </form>
+  </div>
+
+  <script src="js/chatbot.js" defer></script>
   <script src="js/productDetail.js" type="module"></script>
 </body>
 

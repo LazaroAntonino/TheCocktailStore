@@ -81,7 +81,6 @@ export class ProductDetailUI {
     });
 
     this.addToCartBtn.addEventListener("click", () => {
-      console.log('inicio push dataLayer')
       dataLayer.push({
         event: 'add_to_cart',
         event_category: 'ecommerce',
@@ -94,15 +93,8 @@ export class ProductDetailUI {
         quantity: this.quantity,
         currency: 'USD',
       });
-      console.log('fin push dataLayer')
-      console.log(
-        "Añadiendo al carrito:",
-        this.product,
-        "Cantidad:",
-        this.quantity
-      );
+      
       cartService.addItem(this.product, this.quantity);
-
 
       const originalText = this.addToCartBtn.textContent;
       this.addToCartBtn.textContent = "¡Añadido!";
