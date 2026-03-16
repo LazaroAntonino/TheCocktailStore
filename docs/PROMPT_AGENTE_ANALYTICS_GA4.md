@@ -11,13 +11,13 @@
 - ✅ Función `enrichEventItems()` que enriquece los eventos del agente con datos reales del catálogo (precio, categoría, subcategoría)
 
 ### 3. UI Components
-- ✅ `productsUI.js`: Eventos GA4 con estructura `ecommerce.items[]` incluyendo `item_category` e `item_subcategory`
+- ✅ `productsUI.js`: Eventos GA4 con estructura `ecommerce.items[]` incluyendo `item_category` e `item_category2`
 - ✅ `cartUI.js`: Evento `remove_from_cart` con estructura GA4 correcta
 - ✅ `productDetailUI.js`: Evento `add_to_cart` con estructura GA4 correcta
 - ✅ `cartPageUI.js`, `checkoutUI.js`, `paymentUI.js`, `confirmationUI.js`: Moneda cambiada de $ a €
 
 ### 4. Chatbot (`chatbot.js`)
-- ✅ Eventos `view_item` y `add_to_cart` con estructura `ecommerce.items[]` incluyendo `item_subcategory`
+- ✅ Eventos `view_item` y `add_to_cart` con estructura `ecommerce.items[]` incluyendo `item_category2`
 
 ### 5. Index.html
 - ✅ Filtros de productos con `filter_type`, `filter_value` e `item_category`
@@ -44,7 +44,7 @@ Tu salida se usa directamente para un dataLayer.push() en GA4, por lo que la pre
 
 ## 0. CATÁLOGO DE PRODUCTOS DE THE COCKTAIL STORE
 
-IMPORTANTE: Utiliza este catálogo para enriquecer los items con item_category e item_subcategory correctos.
+IMPORTANTE: Utiliza este catálogo para enriquecer los items con item_category e item_category2 correctos.
 
 | ID | Nombre | Precio | Categoría | Subcategoría |
 |----|--------|--------|-----------|--------------|
@@ -111,7 +111,7 @@ La salida debe ser siempre JSON válido.
 - `item_name` (string): Nombre exacto del producto
 - `price` (number): Precio del producto en EUR
 - `item_category` (string): Categoría principal (laptops, smartphones, accessories)
-- `item_subcategory` (string): Subcategoría específica (gaming, ultrabook, flagship, plegables, monitores, perifericos, audio, creatividad, realidad_virtual, smart_home, tablets, drones, seguridad, workstation, monitores_gaming)
+- `item_category2` (string): Subcategoría específica (gaming, ultrabook, flagship, plegables, monitores, perifericos, audio, creatividad, realidad_virtual, smart_home, tablets, drones, seguridad, workstation, monitores_gaming)
 - `quantity` (number): Cantidad (por defecto 1)
 
 ---
@@ -138,7 +138,7 @@ La salida debe ser siempre JSON válido.
         "item_name": "NovaTech Phantom X9",
         "price": 2499.99,
         "item_category": "laptops",
-        "item_subcategory": "gaming",
+        "item_category2": "gaming",
         "quantity": 1
       },
       {
@@ -146,7 +146,7 @@ La salida debe ser siempre JSON válido.
         "item_name": "ShadowBlade Elite",
         "price": 2299.99,
         "item_category": "laptops",
-        "item_subcategory": "gaming",
+        "item_category2": "gaming",
         "quantity": 1
       }
     ]
@@ -176,7 +176,7 @@ La salida debe ser siempre JSON válido.
         "item_name": "NovaTech Phantom X9",
         "price": 2499.99,
         "item_category": "laptops",
-        "item_subcategory": "gaming",
+        "item_category2": "gaming",
         "quantity": 1
       }
     ]
@@ -205,7 +205,7 @@ La salida debe ser siempre JSON válido.
         "item_name": "NovaTech Phantom X9",
         "price": 2499.99,
         "item_category": "laptops",
-        "item_subcategory": "gaming",
+        "item_category2": "gaming",
         "quantity": 1
       }
     ]
@@ -295,7 +295,7 @@ Devuelve `{"event": null}` en estos casos:
         "item_name": "NovaTech Phantom X9",
         "price": 2499.99,
         "item_category": "laptops",
-        "item_subcategory": "gaming",
+        "item_category2": "gaming",
         "quantity": 1
       },
       {
@@ -303,7 +303,7 @@ Devuelve `{"event": null}` en estos casos:
         "item_name": "ShadowBlade Elite",
         "price": 2299.99,
         "item_category": "laptops",
-        "item_subcategory": "gaming",
+        "item_category2": "gaming",
         "quantity": 1
       }
     ]
@@ -331,7 +331,7 @@ Devuelve `{"event": null}` en estos casos:
         "item_name": "NovaTech Phantom X9",
         "price": 2499.99,
         "item_category": "laptops",
-        "item_subcategory": "gaming",
+        "item_category2": "gaming",
         "quantity": 1
       }
     ]
@@ -359,7 +359,7 @@ Devuelve `{"event": null}` en estos casos:
         "item_name": "NovaTech Phantom X9",
         "price": 2499.99,
         "item_category": "laptops",
-        "item_subcategory": "gaming",
+        "item_category2": "gaming",
         "quantity": 1
       }
     ]
@@ -405,7 +405,7 @@ Devuelve `{"event": null}` en estos casos:
 
 Tu salida es siempre un único JSON, sin texto adicional, sin explicaciones, sin comentarios.
 
-- Si hay un evento de funnel claro → debes dispararlo con el formato exacto indicado, incluyendo SIEMPRE `item_category` e `item_subcategory` para cada item.
+- Si hay un evento de funnel claro → debes dispararlo con el formato exacto indicado, incluyendo SIEMPRE `item_category` e `item_category2` para cada item.
 - Si no hay evento claro o falta algún dato obligatorio → devuelve exactamente: `{"event": null}`
 ```
 
@@ -415,7 +415,7 @@ Tu salida es siempre un único JSON, sin texto adicional, sin explicaciones, sin
 
 1. Este prompt incluye el catálogo completo de productos para que el agente pueda enriquecer correctamente los datos.
 
-2. Los campos `item_category` e `item_subcategory` son ahora OBLIGATORIOS en todos los items.
+2. Los campos `item_category` e `item_category2` son ahora OBLIGATORIOS en todos los items.
 
 3. El campo `value` en `ecommerce` debe calcularse sumando `price * quantity` de todos los items.
 
@@ -432,7 +432,7 @@ Tu salida es siempre un único JSON, sin texto adicional, sin explicaciones, sin
 - `smartphones` - Teléfonos móviles
 - `accessories` - Accesorios
 
-### Subcategorías (`item_subcategory`)
+### Subcategorías (`item_category2`)
 
 | Categoría | Subcategorías disponibles |
 |-----------|---------------------------|

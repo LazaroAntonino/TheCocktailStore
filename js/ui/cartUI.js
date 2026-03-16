@@ -93,7 +93,7 @@ dataLayer.push({
       item_name: '${item.name}',
       price: ${item.price},
       item_category: '${item.category || ''}',
-      item_subcategory: '${item.subcategory || ''}',
+      item_category2: '${item.subcategory || ''}',
       quantity: ${item.quantity}
     }]
   }

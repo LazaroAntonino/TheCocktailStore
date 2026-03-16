@@ -81,7 +81,7 @@ function enrichEventItems(eventData) {
         item_name: catalogProduct.name,
         price: catalogProduct.price,
         item_category: catalogProduct.category,
-        item_subcategory: catalogProduct.subcategory,
+        item_category2: catalogProduct.subcategory,
         quantity: item.quantity || 1
       };
     }
@@ -92,7 +92,7 @@ function enrichEventItems(eventData) {
       item_id: item.item_id || 'unknown',
       price: item.price || 0,
       item_category: item.item_category || 'unknown',
-      item_subcategory: item.item_subcategory || 'unknown',
+      item_category2: item.item_category2 || 'unknown',
       quantity: item.quantity || 1
     };
   });

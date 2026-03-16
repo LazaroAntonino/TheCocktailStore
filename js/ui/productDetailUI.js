@@ -91,7 +91,7 @@ export class ProductDetailUI {
             item_name: this.product.name,
             price: this.product.price,
             item_category: this.product.category || '',
-            item_subcategory: this.product.subcategory || '',
+            item_category2: this.product.subcategory || '',
             quantity: this.quantity
           }]
         }

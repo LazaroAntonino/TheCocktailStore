@@ -101,7 +101,7 @@ export class ProductsUI {
                           item_name: '${product.name}',
                           price: ${product.price},
                           item_category: '${product.category || ''}',
-                          item_subcategory: '${product.subcategory || ''}',
+                          item_category2: '${product.subcategory || ''}',
                           quantity: 1
                         }]
                       }
@@ -121,7 +121,7 @@ export class ProductsUI {
                           item_name: '${product.name}',
                           price: ${product.price},
                           item_category: '${product.category || ''}',
-                          item_subcategory: '${product.subcategory || ''}',
+                          item_category2: '${product.subcategory || ''}',
                           quantity: 1
                         }]
                       }
@@ -144,7 +144,7 @@ export class ProductsUI {
                           item_name: '${product.name}',
                           price: ${product.price},
                           item_category: '${product.category || ''}',
-                          item_subcategory: '${product.subcategory || ''}',
+                          item_category2: '${product.subcategory || ''}',
                           quantity: 1
                         }]
                       }
@@ -162,7 +162,7 @@ export class ProductsUI {
                           item_name: '${product.name}',
                           price: ${product.price},
                           item_category: '${product.category || ''}',
-                          item_subcategory: '${product.subcategory || ''}',
+                          item_category2: '${product.subcategory || ''}',
                           quantity: 1
                         }]
                       }

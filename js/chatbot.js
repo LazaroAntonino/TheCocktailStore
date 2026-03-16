@@ -116,7 +116,7 @@
                 item_name: item.name,
                 price: typeof item.price === 'number' ? item.price : parseFloat(item.price),
                 item_category: item.category || '',
-                item_subcategory: item.subcategory || '',
+                item_category2: item.subcategory || '',
                 quantity: 1
               }]
             }
@@ -151,7 +151,7 @@
                   item_name: item.name,
                   price: typeof item.price === 'number' ? item.price : parseFloat(item.price),
                   item_category: item.category || '',
-                  item_subcategory: item.subcategory || '',
+                  item_category2: item.subcategory || '',
                   quantity: 1
                 }]
               }
