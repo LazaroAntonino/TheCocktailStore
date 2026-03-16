@@ -108,10 +108,6 @@
         if (window.dataLayer) {
           window.dataLayer.push({
             event: 'view_item',
-            event_category: 'ecommerce',
-            event_action: 'view_item_chatbot',
-            event_label: item.name,
-            conversation_id: state.conversationId,
             ecommerce: {
               currency: 'EUR',
               value: typeof item.price === 'number' ? item.price : parseFloat(item.price),

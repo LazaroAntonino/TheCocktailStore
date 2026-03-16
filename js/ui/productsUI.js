@@ -93,9 +93,6 @@ export class ProductsUI {
           }" class="product__img" onclick="
                     dataLayer.push({
                       event: 'view_item',
-                      event_category: 'ecommerce',
-                      event_action: 'view_product_card_details',
-                      event_label: '${product.name}',
                       ecommerce: {
                         currency: 'EUR',
                         value: ${product.price},
@@ -116,9 +113,6 @@ export class ProductsUI {
                         <a href="product.html?id=${product.id}" onclick="
                     dataLayer.push({
                       event: 'view_item',
-                      event_category: 'ecommerce',
-                      event_action: 'view_product_text_details',
-                      event_label: '${product.name}',
                       ecommerce: {
                         currency: 'EUR',
                         value: ${product.price},
@@ -142,9 +136,6 @@ export class ProductsUI {
           }" onclick="
                     dataLayer.push({
                       event: 'view_item',
-                      event_category: 'ecommerce',
-                      event_action: 'view_product_button_details',
-                      event_label: '${product.name}',
                       ecommerce: {
                         currency: 'EUR',
                         value: ${product.price},

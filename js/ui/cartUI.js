@@ -85,9 +85,6 @@ export class CartUI {
               <button class="remove-btn" onclick="
 dataLayer.push({
   event: 'remove_from_cart',
-  event_category: 'ecommerce',
-  event_action: 'click_remove_item',
-  event_label: '${item.name}',
   ecommerce: {
     currency: 'EUR',
     value: ${item.price * item.quantity},
