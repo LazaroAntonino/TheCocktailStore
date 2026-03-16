@@ -111,6 +111,46 @@ function enrichEventItems(eventData) {
   };
 }
 
+// Función para enriquecer itemDetails con datos del catálogo (para el frontend)
+function enrichItemDetails(itemDetails) {
+  if (!itemDetails) return null;
+  
+  // Si es un array, enriquecemos cada item
+  if (Array.isArray(itemDetails)) {
+    return itemDetails.map(item => {
+      const catalogProduct = findProductByName(item.name || item.item_name);
+      if (catalogProduct) {
+        return {
+          ...item,
+          id: catalogProduct.id,
+          name: catalogProduct.name,
+          price: catalogProduct.price,
+          category: catalogProduct.category,
+          subcategory: catalogProduct.subcategory,
+          image: catalogProduct.image
+        };
+      }
+      return item;
+    });
+  }
+  
+  // Si es un objeto individual
+  const catalogProduct = findProductByName(itemDetails.name || itemDetails.item_name);
+  if (catalogProduct) {
+    return {
+      ...itemDetails,
+      id: catalogProduct.id,
+      name: catalogProduct.name,
+      price: catalogProduct.price,
+      category: catalogProduct.category,
+      subcategory: catalogProduct.subcategory,
+      image: catalogProduct.image
+    };
+  }
+  
+  return itemDetails;
+}
+
 // Cache temporal para almacenar analytics pendientes (en producción usar Redis)
 const analyticsCache = new Map();
 
@@ -311,6 +351,9 @@ app.post('/api/chat', async (req, res) => {
       botReply = botReply.replace(/\n{3,}/g, '\n\n');
     }
 
+    // ENRIQUECER itemDetails con datos del catálogo (precio, categoría, subcategoría, imagen)
+    const enrichedItemDetails = enrichItemDetails(itemDetails);
+
     // =================================================================================
     // FASE 2: GENERAR ID ÚNICO Y LANZAR ANALYTICS EN BACKGROUND
     // =================================================================================
@@ -324,9 +367,9 @@ app.post('/api/chat', async (req, res) => {
       timestamp: Date.now() 
     });
     
-    // Lanzamos los agentes en background (no bloqueante)
+    // Lanzamos los agentes en background (no bloqueante) - usamos enrichedItemDetails
     setImmediate(() => {
-      runAnalyticsAgentsInBackground(messageId, message, botReply, itemDetails);
+      runAnalyticsAgentsInBackground(messageId, message, botReply, enrichedItemDetails);
     });
 
     // =================================================================================
@@ -334,9 +377,9 @@ app.post('/api/chat', async (req, res) => {
     // =================================================================================
     return res.json({
       reply: botReply,
-      itemDetails: itemDetails,        // Datos del producto (si aplica)
+      itemDetails: enrichedItemDetails,  // Datos del producto ENRIQUECIDOS
       threadId: mainThreadId,
-      messageId: messageId,            // ID para consultar analytics después
+      messageId: messageId,              // ID para consultar analytics después
       // interaction y analytics ya NO se esperan aquí
     });
 
