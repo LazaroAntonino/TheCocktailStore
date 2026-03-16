@@ -50,7 +50,7 @@ export class ConfirmationUI {
                 </div>
                 <div class="item-info">
                     <h4>${item.name}</h4>
-                    <p>$${item.price.toFixed(2)} x ${item.quantity} = $${(
+                    <p>€${item.price.toFixed(2)} x ${item.quantity} = €${(
             item.price * item.quantity
           ).toFixed(2)}</p>
                 </div>
@@ -65,26 +65,26 @@ export class ConfirmationUI {
     this.orderSummary.innerHTML = `
         <div class="summary-row">
             <span>Subtotal:</span>
-            <span>$${orderInfo.subtotal.toFixed(2)}</span>
+            <span>€${orderInfo.subtotal.toFixed(2)}</span>
         </div>
         <div class="summary-row">
             <span>Envío (${
               orderInfo.shippingMethod === "express" ? "Express" : "Estándar"
             }):</span>
-            <span>$${orderInfo.shipping.toFixed(2)}</span>
+            <span>€${orderInfo.shipping.toFixed(2)}</span>
         </div>
         <div class="summary-row">
             <span>Impuestos:</span>
-            <span>$${orderInfo.tax.toFixed(2)}</span>
+            <span>€${orderInfo.tax.toFixed(2)}</span>
         </div>
         <div class="summary-row total">
             <span>Total:</span>
-            <span>$${orderInfo.total.toFixed(2)}</span>
+            <span>€${orderInfo.total.toFixed(2)}</span>
         </div>
     `;
 
     if (this.orderTotal) {
-      this.orderTotal.textContent = `$${orderInfo.total.toFixed(2)}`;
+      this.orderTotal.textContent = `€${orderInfo.total.toFixed(2)}`;
     }
   }
 

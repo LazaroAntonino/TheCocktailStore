@@ -92,16 +92,22 @@ export class ProductsUI {
                     <img src="${product.image}" alt="${product.name
           }" class="product__img" onclick="
                     dataLayer.push({
-                      event: 'product_details_view',
+                      event: 'view_item',
                       event_category: 'ecommerce',
                       event_action: 'view_product_card_details',
                       event_label: '${product.name}',
-                      product_id: '${product.id}',
-                      product_name: '${product.name}',
-                      product_price: '${product.price.toFixed(2)}',
-                      product_list_position: '${product.id}', // Usar la posición calculada
-                      currency: 'USD',
-                      link_url: 'product.html?id=${product.id}'
+                      ecommerce: {
+                        currency: 'EUR',
+                        value: ${product.price},
+                        items: [{
+                          item_id: '${product.id}',
+                          item_name: '${product.name}',
+                          price: ${product.price},
+                          item_category: '${product.category || ''}',
+                          item_subcategory: '${product.subcategory || ''}',
+                          quantity: 1
+                        }]
+                      }
                     });
                   " >
                 </a>
@@ -109,36 +115,48 @@ export class ProductsUI {
                     <h3 class="product__title">
                         <a href="product.html?id=${product.id}" onclick="
                     dataLayer.push({
-                      event: 'product_details_view',
+                      event: 'view_item',
                       event_category: 'ecommerce',
                       event_action: 'view_product_text_details',
                       event_label: '${product.name}',
-                      product_id: '${product.id}',
-                      product_name: '${product.name}',
-                      product_price: '${product.price.toFixed(2)}',
-                      product_list_position: '${product.id}', // Usar la posición calculada
-                      currency: 'USD',
-                      link_url: 'product.html?id=${product.id}'
+                      ecommerce: {
+                        currency: 'EUR',
+                        value: ${product.price},
+                        items: [{
+                          item_id: '${product.id}',
+                          item_name: '${product.name}',
+                          price: ${product.price},
+                          item_category: '${product.category || ''}',
+                          item_subcategory: '${product.subcategory || ''}',
+                          quantity: 1
+                        }]
+                      }
                     });
                   ">${product.name
           } ${product.name}"</a>
                     </h3>
                     <p class="product__description">${product.description}</p>
-                    <p class="product__price">$${product.price.toFixed(2)}</p>
+                    <p class="product__price">€${product.price.toFixed(2)}</p>
                     <div class="product__buttons">
                         <a href="product.html?id=${product.id
           }" onclick="
                     dataLayer.push({
-                      event: 'product_details_view',
+                      event: 'view_item',
                       event_category: 'ecommerce',
                       event_action: 'view_product_button_details',
                       event_label: '${product.name}',
-                      product_id: '${product.id}',
-                      product_name: '${product.name}',
-                      product_price: '${product.price.toFixed(2)}',
-                      product_list_position: '${product.id}', // Usar la posición calculada
-                      currency: 'USD',
-                      link_url: 'product.html?id=${product.id}'
+                      ecommerce: {
+                        currency: 'EUR',
+                        value: ${product.price},
+                        items: [{
+                          item_id: '${product.id}',
+                          item_name: '${product.name}',
+                          price: ${product.price},
+                          item_category: '${product.category || ''}',
+                          item_subcategory: '${product.subcategory || ''}',
+                          quantity: 1
+                        }]
+                      }
                     });
                   " class="button button--secondary" 
                         })} id="${product.id}-${product.name}">Ver Detalles Producto</a>
@@ -147,12 +165,19 @@ export class ProductsUI {
                       event: 'add_to_cart',
                       event_category: 'ecommerce',
                       event_action: 'add_to_cart_card',
-                      event_label: 'add_to_cart',
-                      product_id: '${product.id}',
-                      product_name: '${product.name}',
-                      product_price: '${product.price.toFixed(2)}',
-                      product_list_position: '${product.id}', // Usar la posición calculada
-                      currency: 'USD',
+                      event_label: '${product.name}',
+                      ecommerce: {
+                        currency: 'EUR',
+                        value: ${product.price},
+                        items: [{
+                          item_id: '${product.id}',
+                          item_name: '${product.name}',
+                          price: ${product.price},
+                          item_category: '${product.category || ''}',
+                          item_subcategory: '${product.subcategory || ''}',
+                          quantity: 1
+                        }]
+                      }
                     });
                   " data-id="${product.id
           }">

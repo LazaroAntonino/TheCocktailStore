@@ -50,7 +50,7 @@ export class CheckoutUI {
             </div>
             <div class="item-info">
                 <h4>${item.name}</h4>
-                <p>$${item.price.toFixed(2)}</p>
+                <p>€${item.price.toFixed(2)}</p>
             </div>
         </div>
     `
@@ -65,19 +65,19 @@ export class CheckoutUI {
     this.orderTotals.innerHTML = `
         <div class="total-row">
             <span>Subtotal</span>
-            <span>$${subtotal.toFixed(2)}</span>
+            <span>€${subtotal.toFixed(2)}</span>
         </div>
         <div class="total-row">
             <span>Envío</span>
-            <span>$${shipping.toFixed(2)}</span>
+            <span>€${shipping.toFixed(2)}</span>
         </div>
         <div class="total-row">
             <span>Impuestos</span>
-            <span>$${tax.toFixed(2)}</span>
+            <span>€${tax.toFixed(2)}</span>
         </div>
         <div class="total-row total-final">
             <span>Total</span>
-            <span>$${total.toFixed(2)}</span>
+            <span>€${total.toFixed(2)}</span>
         </div>
     `;
   }

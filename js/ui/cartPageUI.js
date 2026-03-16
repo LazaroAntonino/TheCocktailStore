@@ -69,7 +69,7 @@ export class CartPageUI {
             </div>
             <div class="item-details">
                 <h3 class="item-name">${item.name}</h3>
-                <p class="item-price">$${item.price.toFixed(2)}</p>
+                <p class="item-price">€${item.price.toFixed(2)}</p>
             </div>
             <div class="item-quantity">
                 <button class="quantity-btn" data-action="decrease">-</button>
@@ -77,7 +77,7 @@ export class CartPageUI {
                 <button class="quantity-btn" data-action="increase">+</button>
             </div>
             <div class="item-total">
-                $${(item.price * item.quantity).toFixed(2)}
+                €${(item.price * item.quantity).toFixed(2)}
             </div>
             <button class="remove-btn">&times;</button>
         </div>
@@ -87,7 +87,7 @@ export class CartPageUI {
     }
 
     const subtotal = cartService.getTotal();
-    this.subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-    this.totalElement.textContent = `$${subtotal.toFixed(2)}`;
+    this.subtotalElement.textContent = `€${subtotal.toFixed(2)}`;
+    this.totalElement.textContent = `€${subtotal.toFixed(2)}`;
   }
 }

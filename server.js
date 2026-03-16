@@ -14,6 +14,103 @@ const ASSISTANT_ID = process.env.ASSISTANT_ID;
 const ASSISTANT_INTERACTION_ID = process.env.ASSISTANT_INTERACTION_ID;
 const ASSISTANT_ANALYTICS_ID = process.env.ASSISTANT_ANALYTICS_ID;
 
+// =================================================================================
+// CATÁLOGO DE PRODUCTOS (para enriquecer datos del agente)
+// =================================================================================
+const PRODUCTS_CATALOG = [
+  { id: 1, name: "NovaTech Phantom X9", price: 2499.99, category: "laptops", subcategory: "gaming", image: "images/NovaTechPhantomX9.png" },
+  { id: 2, name: "VortexBook Pro", price: 1699.99, category: "laptops", subcategory: "ultrabook", image: "images/VortexBookPro.png" },
+  { id: 3, name: "Nebula Z1 Ultra", price: 1199.99, category: "smartphones", subcategory: "flagship", image: "images/NebulaZ1Ultra.png" },
+  { id: 4, name: "PulsePhone Infinity", price: 999.99, category: "smartphones", subcategory: "flagship", image: "images/PulsePhoneInfinity.png" },
+  { id: 5, name: "ShadowBlade Elite", price: 2299.99, category: "laptops", subcategory: "gaming", image: "images/ShadowBladeElite.png" },
+  { id: 6, name: "InfinityView UltraWide", price: 899.99, category: "accessories", subcategory: "monitores", image: "images/InfinityViewUltraWide.png" },
+  { id: 7, name: "NeuroBlade Tactile", price: 229.99, category: "accessories", subcategory: "perifericos", image: "images/NeuroBladeTactile.png" },
+  { id: 8, name: "Quantum Fold", price: 699.99, category: "smartphones", subcategory: "plegables", image: "images/QuantumFold.png" },
+  { id: 9, name: "VisionPro Gaming Display", price: 799.99, category: "accessories", subcategory: "monitores_gaming", image: "images/VisionProGamingDisplay.png" },
+  { id: 10, name: "TitanBook Ultimate", price: 3499.99, category: "laptops", subcategory: "workstation", image: "images/TitanBookUltimate.png" },
+  { id: 11, name: "SonicWave Pro Headset", price: 349.99, category: "accessories", subcategory: "audio", image: "images/SonicWaveProHeadset.png" },
+  { id: 12, name: "HoloDesk Studio", price: 1899.99, category: "accessories", subcategory: "creatividad", image: "images/HoloDeskStudio.png" },
+  { id: 13, name: "QuantumAir Pro", price: 1299.99, category: "laptops", subcategory: "ultrabook", image: "images/QuantumAirPro.png" },
+  { id: 14, name: "NexusVR Elite", price: 899.99, category: "accessories", subcategory: "realidad_virtual", image: "images/NexusVRElite.png" },
+  { id: 15, name: "EchoSphere Home", price: 399.99, category: "accessories", subcategory: "smart_home", image: "images/EchoSphereHome.png" },
+  { id: 16, name: "ChromaNote Flex", price: 1499.99, category: "accessories", subcategory: "tablets", image: "images/ChromaNoteFlex.png" },
+  { id: 17, name: "PulseDrone Voyager", price: 1799.99, category: "accessories", subcategory: "drones", image: "images/PulseDroneVoyager.png" },
+  { id: 18, name: "OmniPhone Stealth", price: 1299.99, category: "smartphones", subcategory: "seguridad", image: "images/OmniPhoneStealth.png" },
+  { id: 19, name: "SonicSurge Tower", price: 2499.99, category: "accessories", subcategory: "audio", image: "images/SonicSurgeTower.png" },
+  { id: 20, name: "NeuroPad Creator", price: 3299.99, category: "accessories", subcategory: "creatividad", image: "images/NeuroPadCreator.png" },
+];
+
+// Función para buscar producto por nombre (fuzzy match)
+function findProductByName(name) {
+  if (!name) return null;
+  const normalizedName = name.toLowerCase().trim();
+  
+  // Búsqueda exacta primero
+  let product = PRODUCTS_CATALOG.find(p => p.name.toLowerCase() === normalizedName);
+  if (product) return product;
+  
+  // Búsqueda parcial
+  product = PRODUCTS_CATALOG.find(p => 
+    p.name.toLowerCase().includes(normalizedName) || 
+    normalizedName.includes(p.name.toLowerCase())
+  );
+  if (product) return product;
+  
+  // Búsqueda por palabras clave
+  const words = normalizedName.split(/\s+/).filter(w => w.length > 2);
+  for (const word of words) {
+    product = PRODUCTS_CATALOG.find(p => p.name.toLowerCase().includes(word));
+    if (product) return product;
+  }
+  
+  return null;
+}
+
+// Función para enriquecer items del evento con datos reales del catálogo
+function enrichEventItems(eventData) {
+  if (!eventData || !eventData.ecommerce || !eventData.ecommerce.items) {
+    return eventData;
+  }
+  
+  const enrichedItems = eventData.ecommerce.items.map(item => {
+    const catalogProduct = findProductByName(item.item_name);
+    
+    if (catalogProduct) {
+      return {
+        item_id: catalogProduct.id.toString(),
+        item_name: catalogProduct.name,
+        price: catalogProduct.price,
+        item_category: catalogProduct.category,
+        item_subcategory: catalogProduct.subcategory,
+        quantity: item.quantity || 1
+      };
+    }
+    
+    // Si no encontramos el producto, mantener los datos originales
+    return {
+      ...item,
+      item_id: item.item_id || 'unknown',
+      price: item.price || 0,
+      item_category: item.item_category || 'unknown',
+      item_subcategory: item.item_subcategory || 'unknown',
+      quantity: item.quantity || 1
+    };
+  });
+  
+  // Calcular value total
+  const totalValue = enrichedItems.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+  
+  return {
+    ...eventData,
+    ecommerce: {
+      ...eventData.ecommerce,
+      currency: 'EUR',
+      value: Math.round(totalValue * 100) / 100,
+      items: enrichedItems
+    }
+  };
+}
+
 // Cache temporal para almacenar analytics pendientes (en producción usar Redis)
 const analyticsCache = new Map();
 
@@ -125,7 +222,8 @@ async function runAnalyticsAgentsInBackground(messageId, userMessage, botReply, 
     }
 
     if (funnelResult.status === 'fulfilled' && funnelResult.value) {
-      results.analytics = funnelResult.value;
+      // ENRIQUECER con datos reales del catálogo
+      results.analytics = enrichEventItems(funnelResult.value);
     }
 
   } catch (err) {

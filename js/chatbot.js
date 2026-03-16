@@ -112,15 +112,18 @@
             event_action: 'view_item_chatbot',
             event_label: item.name,
             conversation_id: state.conversationId,
-            currency: 'EUR',
-            value: typeof item.price === 'number' ? item.price : parseFloat(item.price),
-            items: [{
-              item_id: item.id,
-              item_name: item.name,
-              price: typeof item.price === 'number' ? item.price : parseFloat(item.price),
-              item_category: item.category || '',
-              quantity: 1
-            }]
+            ecommerce: {
+              currency: 'EUR',
+              value: typeof item.price === 'number' ? item.price : parseFloat(item.price),
+              items: [{
+                item_id: item.id ? item.id.toString() : 'unknown',
+                item_name: item.name,
+                price: typeof item.price === 'number' ? item.price : parseFloat(item.price),
+                item_category: item.category || '',
+                item_subcategory: item.subcategory || '',
+                quantity: 1
+              }]
+            }
           });
         }
       });
@@ -148,15 +151,18 @@
               event_action: 'add_to_cart_chatbot',
               event_label: item.name,
               conversation_id: state.conversationId,
-              currency: 'EUR',
-              value: typeof item.price === 'number' ? item.price : parseFloat(item.price),
-              items: [{
-                item_id: item.id,
-                item_name: item.name,
-                price: typeof item.price === 'number' ? item.price : parseFloat(item.price),
-                item_category: item.category || '',
-                quantity: 1
-              }]
+              ecommerce: {
+                currency: 'EUR',
+                value: typeof item.price === 'number' ? item.price : parseFloat(item.price),
+                items: [{
+                  item_id: item.id ? item.id.toString() : 'unknown',
+                  item_name: item.name,
+                  price: typeof item.price === 'number' ? item.price : parseFloat(item.price),
+                  item_category: item.category || '',
+                  item_subcategory: item.subcategory || '',
+                  quantity: 1
+                }]
+              }
             });
           }
 

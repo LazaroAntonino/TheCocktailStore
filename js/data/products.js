@@ -7,6 +7,7 @@ export const products = [
       "Portátil gaming definitivo con refrigeración cuántica y teclado neuroadaptativo",
     image: "images/NovaTechPhantomX9.png",
     category: "laptops",
+    subcategory: "gaming",
     stock: 10,
     specs: {
       processor: "OmegaCore i9-13X",
@@ -24,6 +25,7 @@ export const products = [
       "Ultraligero con autonomía de 30 horas y pantalla holográfica desplegable",
     image: "images/VortexBookPro.png",
     category: "laptops",
+    subcategory: "ultrabook",
     stock: 8,
     specs: {
       processor: "FusionX Zen 12",
@@ -41,6 +43,7 @@ export const products = [
       "Smartphone con cámara orbital y batería de grafeno con carga instantánea",
     image: "images/NebulaZ1Ultra.png",
     category: "smartphones",
+    subcategory: "flagship",
     stock: 15,
     specs: {
       processor: "QuantumSnap 9 Gen 3",
@@ -58,6 +61,7 @@ export const products = [
       "Teléfono con pantalla extensible y sistema de proyección holográfica",
     image: "images/PulsePhoneInfinity.png",
     category: "smartphones",
+    subcategory: "flagship",
     stock: 12,
     specs: {
       processor: "NeuroPulse X4",
@@ -75,6 +79,7 @@ export const products = [
       "Portátil gaming con sistema de refrigeración criogénica y teclado mecánico personalizable",
     image: "images/ShadowBladeElite.png",
     category: "laptops",
+    subcategory: "gaming",
     stock: 6,
     specs: {
       processor: "HyperCore i9-X",
@@ -92,6 +97,7 @@ export const products = [
       "Monitor curvo panorámico con tecnología de inmersión sensorial y audio espacial",
     image: "images/InfinityViewUltraWide.png",
     category: "accessories",
+    subcategory: "monitores",
     stock: 5,
     specs: {
       resolution: "8K UltraWide (7680x2160)",
@@ -109,6 +115,7 @@ export const products = [
       "Teclado con retroalimentación háptica avanzada y teclas con memoria de usuario",
     image: "images/NeuroBladeTactile.png",
     category: "accessories",
+    subcategory: "perifericos",
     stock: 15,
     specs: {
       switches: "TactileSense Magnético",
@@ -125,6 +132,7 @@ export const products = [
       "Smartphone plegable con tres pantallas y sistema de proyección láser",
     image: "images/QuantumFold.png",
     category: "smartphones",
+    subcategory: "plegables",
     stock: 10,
     specs: {
       processor: "OmegaFusion X12",
@@ -142,6 +150,7 @@ export const products = [
       "Monitor gaming con tecnología de seguimiento ocular y ajuste automático de brillo",
     image: "images/VisionProGamingDisplay.png",
     category: "accessories",
+    subcategory: "monitores_gaming",
     stock: 7,
     specs: {
       resolution: "5K (5120x2880)",
@@ -159,6 +168,7 @@ export const products = [
       "Estación de trabajo portátil con doble GPU y sistema de refrigeración por nitrógeno líquido",
     image: "images/TitanBookUltimate.png",
     category: "laptops",
+    subcategory: "workstation",
     stock: 4,
     specs: {
       processor: "OmegaCore i9-14X Extreme",
@@ -176,6 +186,7 @@ export const products = [
       "Auriculares con cancelación de ruido neuroadaptativa y audio espacial personalizado según la forma de tu oído",
     image: "images/SonicWaveProHeadset.png",
     category: "accessories",
+    subcategory: "audio",
     stock: 9,
     specs: {
       driver: "Transductores de grafeno de 50mm",
@@ -193,6 +204,7 @@ export const products = [
       "Estación de trabajo con proyección holográfica 3D y superficie táctil de alta precisión para diseñadores y creadores de contenido",
     image: "images/HoloDeskStudio.png",
     category: "accessories",
+    subcategory: "creatividad",
     stock: 3,
     specs: {
       projection: "Holográfica volumétrica 32x24 pulgadas",
@@ -211,6 +223,7 @@ export const products = [
       "Ultrabook con pantalla transparente y tecnología de refrigeración por levitación magnética",
     image: "images/QuantumAirPro.png",
     category: "laptops",
+    subcategory: "ultrabook",
     stock: 7,
     specs: {
       processor: "NanoCore i7-X",
@@ -228,6 +241,7 @@ export const products = [
       "Visor de realidad virtual con seguimiento ocular y sensores hápticos para una inmersión total",
     image: "images/NexusVRElite.png",
     category: "accessories",
+    subcategory: "realidad_virtual",
     stock: 12,
     specs: {
       resolution: "8K por ojo (16K total)",
@@ -246,6 +260,7 @@ export const products = [
       "Asistente domótico holográfico con proyección 3D y control por gestos y voz",
     image: "images/EchoSphereHome.png",
     category: "accessories",
+    subcategory: "smart_home",
     stock: 20,
     specs: {
       processor: "QuantumAI Neural Engine",
@@ -264,6 +279,7 @@ export const products = [
       "Tablet plegable con pantalla de tinta electrónica a color y lápiz con sensación de papel real",
     image: "images/ChromaNoteFlex.png",
     category: "accessories",
+    subcategory: "tablets",
     stock: 9,
     specs: {
       screen: "13.3 pulgadas E-Ink Spectrum plegable",
@@ -283,6 +299,7 @@ export const products = [
       "Dron profesional con cámara 12K y sistema de vuelo autónomo con IA predictiva",
     image: "images/PulseDroneVoyager.png",
     category: "accessories",
+    subcategory: "drones",
     stock: 5,
     specs: {
       camera: "12K HDR con estabilización cuántica",
@@ -301,6 +318,7 @@ export const products = [
       "Smartphone con tecnología de camuflaje adaptativo y sistema de seguridad biométrica avanzada",
     image: "images/OmniPhoneStealth.png",
     category: "smartphones",
+    subcategory: "seguridad",
     stock: 8,
     specs: {
       processor: "QuantumEdge X4",
@@ -321,6 +339,7 @@ export const products = [
       "Sistema de sonido holofónico con proyección de sonido direccional y materialización de bajos",
     image: "images/SonicSurgeTower.png",
     category: "accessories",
+    subcategory: "audio",
     stock: 4,
     specs: {
       power: "2000W RMS",
@@ -339,6 +358,7 @@ export const products = [
       "Tableta de dibujo con superficie de textura adaptativa y generación de contenido por IA integrada",
     image: "images/NeuroPadCreator.png",
     category: "accessories",
+    subcategory: "creatividad",
     stock: 6,
     specs: {
       screen: "32 pulgadas 8K HDR Adaptive Texture",

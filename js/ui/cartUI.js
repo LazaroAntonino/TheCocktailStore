@@ -75,7 +75,7 @@ export class CartUI {
           }" class="cart-item__image">
               <div class="cart-item__details">
                   <h4 class="cart-item__name">${item.name}</h4>
-                  <p class="cart-item__price">$${item.price.toFixed(2)}</p>
+                  <p class="cart-item__price">€${item.price.toFixed(2)}</p>
                   <div class="cart-item__quantity">
                       <button class="quantity-btn" data-action="decrease">-</button>
                       <span>${item.quantity}</span>
@@ -84,15 +84,22 @@ export class CartUI {
               </div>
               <button class="remove-btn" onclick="
 dataLayer.push({
-event: 'update_cart',
-event_category: 'ecommerce',
-event_action: 'click_remove_item',
-event_label: 'remove_item',
-currency: 'EUR',
-product_id: '${item.id.toString()}',
-product_name: '${item.name.toString()}',
-product_price: '${item.price.toString()}',
-quantity: '${item.quantity.toString()}'
+  event: 'remove_from_cart',
+  event_category: 'ecommerce',
+  event_action: 'click_remove_item',
+  event_label: '${item.name}',
+  ecommerce: {
+    currency: 'EUR',
+    value: ${item.price * item.quantity},
+    items: [{
+      item_id: '${item.id}',
+      item_name: '${item.name}',
+      price: ${item.price},
+      item_category: '${item.category || ''}',
+      item_subcategory: '${item.subcategory || ''}',
+      quantity: ${item.quantity}
+    }]
+  }
 });
 ">&times;</button>
           </div>
@@ -100,7 +107,7 @@ quantity: '${item.quantity.toString()}'
       )
       .join("");
 
-    this.cartTotal.textContent = `$${cartService.getTotal().toFixed(2)}`;
+    this.cartTotal.textContent = `€${cartService.getTotal().toFixed(2)}`;
 
     if (!document.getElementById("cartStyles")) {
       const styles = document.createElement("style");

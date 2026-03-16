@@ -35,7 +35,7 @@ export class ProductDetailUI {
     this.mainImage.src = this.product.image;
     this.mainImage.alt = this.product.name;
     this.title.textContent = this.product.name;
-    this.price.textContent = `$${this.product.price.toFixed(2)}`;
+    this.price.textContent = `€${this.product.price.toFixed(2)}`;
     this.description.textContent = this.product.description;
     this.stockStatus.textContent =
       this.product.stock > 0 ? "En stock" : "Agotado";
@@ -85,13 +85,19 @@ export class ProductDetailUI {
         event: 'add_to_cart',
         event_category: 'ecommerce',
         event_action: 'add_to_cart_details',
-        event_label: 'add_to_cart',
-        product_id: this.product.id,
-        product_name: this.product.name,
-        product_price: this.product.price.toFixed(2),
-        product_list_position: this.product.id,
-        quantity: this.quantity,
-        currency: 'USD',
+        event_label: this.product.name,
+        ecommerce: {
+          currency: 'EUR',
+          value: this.product.price * this.quantity,
+          items: [{
+            item_id: this.product.id.toString(),
+            item_name: this.product.name,
+            price: this.product.price,
+            item_category: this.product.category || '',
+            item_subcategory: this.product.subcategory || '',
+            quantity: this.quantity
+          }]
+        }
       });
       
       cartService.addItem(this.product, this.quantity);
