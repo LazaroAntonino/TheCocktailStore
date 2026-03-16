@@ -147,10 +147,6 @@
           if (window.dataLayer) {
             window.dataLayer.push({
               event: 'add_to_cart',
-              event_category: 'ecommerce',
-              event_action: 'add_to_cart_chatbot',
-              event_label: item.name,
-              conversation_id: state.conversationId,
               ecommerce: {
                 currency: 'EUR',
                 value: typeof item.price === 'number' ? item.price : parseFloat(item.price),

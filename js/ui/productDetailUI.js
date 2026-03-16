@@ -83,9 +83,6 @@ export class ProductDetailUI {
     this.addToCartBtn.addEventListener("click", () => {
       dataLayer.push({
         event: 'add_to_cart',
-        event_category: 'ecommerce',
-        event_action: 'add_to_cart_details',
-        event_label: this.product.name,
         ecommerce: {
           currency: 'EUR',
           value: this.product.price * this.quantity,

@@ -163,9 +163,6 @@ export class ProductsUI {
                         <button class="button product__button" onclick="
                     dataLayer.push({
                       event: 'add_to_cart',
-                      event_category: 'ecommerce',
-                      event_action: 'add_to_cart_card',
-                      event_label: '${product.name}',
                       ecommerce: {
                         currency: 'EUR',
                         value: ${product.price},
