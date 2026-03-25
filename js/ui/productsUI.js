@@ -88,7 +88,7 @@ export class ProductsUI {
         (product) => `
             <article class="product__card">
                 <a href="product.html?id=${product.id
-          }" class="product__img-link" id="${product.id}-${product.name}">
+          }" class="product__img-link" id="${product.id}-${product.name}" item-category="${product.category}" item-subcategory="${product.subcategory}">
                     <img src="${product.image}" alt="${product.name
           }" class="product__img" onclick="
                     dataLayer.push({
