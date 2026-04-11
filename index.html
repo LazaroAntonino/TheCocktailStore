@@ -36,53 +36,39 @@
     <nav class="nav container">
       <a href="/" class="nav__logo">
         <i class="fas fa-laptop"></i>
-        The Cocktail Store de Antonino
+        <span class="nav__logo-text">The Cocktail Store</span>
       </a>
 
-      <!-- <div class="nav__menu">
-          <ul class="nav__list">
-            <li class="nav__item">
-              <a href="#home" class="nav__link active">Inicio</a>
-            </li>
-            <li class="nav__item">
-              <a href="#products" class="nav__link">Productos</a>
-            </li>
-            <li class="nav__item">
-              <a href="#categories" class="nav__link">Categorías</a>
-            </li>
-          </ul>
-        </div> -->
-
       <div class="nav__actions">
+        <button class="nav__search-toggle" aria-label="Buscar">
+          <i class="fas fa-search"></i>
+        </button>
+        
         <div class="nav__search">
           <input type="text" placeholder="Buscar productos..." class="nav__search-input" />
           <i class="fas fa-search nav__search-icon"></i>
         </div>
 
-        <div class="nav__cart">
+        <a href="/cart.html" class="nav__cart">
           <i class="fas fa-shopping-cart nav__cart-icon"></i>
           <span class="nav__cart-count">0</span>
-        </div>
-
-        <div class="nav__user">
-          <a href="https://github.com/EduardoHernandezGuzman" target="_blank">
-            <i class="fa-solid fa-code"></i>
-          </a>
-        </div>
+        </a>
 
         <div id="auth-nav"></div>
       </div>
     </nav>
-  </header>
-</div>
-
-        <div class="nav__user">
-          <a href="https://github.com/EduardoHernandezGuzman" target="_blank">
-            <i class="fa-solid fa-code"></i>
-          </a>
+    
+    <!-- Barra de búsqueda móvil -->
+    <div class="nav__search-mobile">
+      <div class="container">
+        <div class="nav__search-mobile-wrapper">
+          <input type="text" placeholder="Buscar productos..." class="nav__search-mobile-input" />
+          <button class="nav__search-mobile-btn" aria-label="Buscar">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
       </div>
-    </nav>
+    </div>
   </header>
 
   <main class="main">
@@ -263,6 +249,7 @@ dataLayer.push({
   </div>
   <script src="js/services/auth.js"></script>
   <script src="js/ui/authUI.js"></script>
+  <script src="js/mobileSearch.js"></script>
   <script src="js/chatbot.js" defer></script>
   <script src="js/app.js" type="module"></script>
 </body>
