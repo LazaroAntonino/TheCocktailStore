@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-N4JJW6M8');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar Sesión - The Cocktail Store</title>
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N4JJW6M8" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
+  <header class="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo">
+        <i class="fas fa-laptop"></i>
+        The Cocktail Store de Antonino
+      </a>
+
+      <div class="nav__actions">
+        <div id="auth-nav"></div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <section class="auth-section">
+      <div class="auth-container">
+        <div class="auth-card">
+          <h1 class="auth-title">Iniciar Sesión</h1>
+          <p class="auth-subtitle">Accede a tu cuenta para continuar</p>
+          
+          <div id="auth-error" class="auth-error"></div>
+          
+          <form id="login-form" class="auth-form">
+            <div class="form-group">
+              <label for="email">Correo electrónico</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                required 
+                placeholder="tu@email.com"
+                autocomplete="email"
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="password">Contraseña</label>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                required 
+                placeholder="••••••••"
+                autocomplete="current-password"
+                minlength="6"
+              />
+            </div>
+            
+            <button type="submit" class="btn-submit">Iniciar sesión</button>
+          </form>
+          
+          <div class="auth-footer">
+            <p>¿No tienes cuenta? <a href="/register.html">Regístrate aquí</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__content">
+        <p class="footer__copyright">
+          &copy; 2024 The Cocktail Store. Todos los derechos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/services/auth.js"></script>
+  <script src="js/ui/authUI.js"></script>
+</body>
+
+</html>

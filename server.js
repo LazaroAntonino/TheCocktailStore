@@ -3,11 +3,15 @@ const cors = require('cors');
 require('dotenv').config();
 
 const { openai } = require('./openaiClient'); // Asegúrate de exportar openai correctamente aquí
+const authRouter = require('./auth/authRouter');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
+
+// Auth routes
+app.use('/api/auth', authRouter);
 
 // 1. CARGAMOS LOS TRES IDs
 const ASSISTANT_ID = process.env.ASSISTANT_ID;
