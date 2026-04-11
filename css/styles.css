@@ -273,8 +273,16 @@ button {
 }
 
 .nav__cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
     color: var(--text-color);
     text-decoration: none;
+    padding: 0.5rem;
 }
 
 .nav__cart-icon,
